@@ -9,6 +9,10 @@ namespace WpfApp1
 {
     public class Game
     {
+        public string Name { get; set; }
+    }
+    public class Game1
+    {
         public string Name;
         public int release;
         public List<string> tags;
@@ -16,7 +20,7 @@ namespace WpfApp1
         public List<string> device;
         public int Time;
 
-        public Game(string name, int release, List<string> tags, List<string> device, List<string> genre, int time)
+        public Game1(string name, int release, List<string> tags, List<string> device, List<string> genre, int time)
         {
             Name = name;
             this.release = release;

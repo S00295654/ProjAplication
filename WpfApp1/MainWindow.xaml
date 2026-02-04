@@ -1,24 +1,30 @@
 ﻿<Window x:Class="WpfApp1.MainWindow"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfApp1"
         mc:Ignorable="d"
+        Style="{StaticResource MaterialDesignWindow}"
+        Background="{DynamicResource MaterialDesign.Surface}"
+        TextElement.Foreground="{DynamicResource MaterialDesign.Body}"
+        TextElement.FontSize="14"
+        FontFamily="{DynamicResource MaterialDesignFont}"
         Title="MainWindow" Height="450" Width="800">
     <TabControl Background="White">
         <TabItem Header="Profil" BorderBrush="#FF00BFA0">
             <Grid Background="White">
 
-                <Rectangle Margin="0,24,0,0"
+                <Rectangle Margin="44,0,555,0"
                    Stroke="Black"
-                   Height="107"
-                   VerticalAlignment="Top"
-                   Width="712"/>
-                <TextBlock FontSize="22"
-                   Foreground="White"
-                   Margin="0,30,20,30"
-                   Text="{Binding User.Name}"/>
+                   Height="337"
+                   VerticalAlignment="Center"/>
+                <TextBox
+                    Text="{Binding User.Name}"
+                    IsReadOnly="True"
+                    FontSize="22" Margin="44,24,555,290"
+                    TextAlignment="Center"/>
 
             </Grid>
         </TabItem>
@@ -55,8 +61,37 @@
 
             </Grid>
         </TabItem>
+        <TabItem Header="Game List" BorderBrush="#FF9E66F3">
+            <Grid Background="{DynamicResource MaterialDesign.Surface}">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
 
+                <!-- BARRE DE RECHERCHE -->
+                <TextBox
+            Margin="20"
+            Width="300"
+            materialDesign:HintAssist.Hint="Rechercher un jeu"
+            Style="{StaticResource MaterialDesignOutlinedTextBox}"
+            Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}" />
 
-        <TabItem Header="Game List" BorderBrush="#FF9E66F3"></TabItem>
+                <!-- LISTE DES JEUX -->
+                <ListView
+            Grid.Row="1"
+            Margin="20"
+            ItemsSource="{Binding FilteredGames}"
+            Style="{StaticResource MaterialDesignListView}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock
+                        Text="{Binding Name}"
+                        FontSize="18"
+                        Margin="10"/>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </Grid>
+        </TabItem>
     </TabControl>
 </Window>

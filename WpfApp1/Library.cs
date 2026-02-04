@@ -8,13 +8,13 @@ namespace WpfApp1
 {
     public class Library
     {
-        public Dictionary<string, Game> Games;
+        public Dictionary<string, Game1> Games;
         public Library() 
         {
-            Games = new Dictionary<string, Game>();
+            Games = new Dictionary<string, Game1>();
         }
 
-        public void AddGame(Game game)
+        public void AddGame(Game1 game)
         {
             Games[game.Name] = game;
         }
