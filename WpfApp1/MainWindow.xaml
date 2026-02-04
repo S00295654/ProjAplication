@@ -6,12 +6,57 @@
         xmlns:local="clr-namespace:WpfApp1"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <TabControl>
-        <TabItem Header="one"></TabItem>
+    <TabControl Background="White">
+        <TabItem Header="Profil" BorderBrush="#FF00BFA0">
+            <Grid Background="White">
 
-        <TabItem Header="one"></TabItem>
+                <Rectangle Margin="0,24,0,0"
+                   Stroke="Black"
+                   Height="107"
+                   VerticalAlignment="Top"
+                   Width="712"/>
+                <TextBlock FontSize="22"
+                   Foreground="White"
+                   Margin="0,30,20,30"
+                   Text="{Binding User.Name}"/>
+
+            </Grid>
+        </TabItem>
+
+        <!-- TAB 1 -->
+        <TabItem Header="Home" Background="#FF0027FF">
+            <Grid Background="#FF20315A">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="15*"/>
+                    <ColumnDefinition Width="382*"/>
+                </Grid.ColumnDefinitions>
+
+                <Rectangle Margin="14,79,44,0" Stroke="Black" Height="107" VerticalAlignment="Top" Grid.Column="1"/>
+                <Rectangle Height="101" Stroke="Black" VerticalAlignment="Top" Margin="14,228,44,0" Grid.Column="1"/>
+
+                <TextBox Margin="14,349,400,0"
+             TextWrapping="Wrap"
+             Text="TextBox"
+             VerticalAlignment="Top"
+             Height="112"
+             Background="#FF20315A" Grid.Column="1"/>
+
+                <Label Content="Current Games"
+           Margin="14,44,0,0"
+           FontSize="20"
+           Foreground="#FFD0D0D0"
+           VerticalAlignment="Top" Grid.Column="1"/>
+
+                <Label Content="Planning to play"
+           Margin="14,186,0,0"
+           FontSize="20"
+           Foreground="#FFCED0CA"
+           VerticalAlignment="Top" Grid.Column="1"/>
+
+            </Grid>
+        </TabItem>
 
 
-        <TabItem Header="one"></TabItem>
+        <TabItem Header="Game List" BorderBrush="#FF9E66F3"></TabItem>
     </TabControl>
 </Window>
