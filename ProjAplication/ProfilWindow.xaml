@@ -1,0 +1,17 @@
+﻿<Window x:Class="ProjAplication.ProfilWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ProjAplication"
+        mc:Ignorable="d"
+        Title="ProfilWindow" Height="450" Width="800">
+    <Grid>
+        <Rectangle Stroke="Black" Fill="#FF0A3D58" Height="44" VerticalAlignment="Top"/>
+        <Button Content="Home" Margin="350,9,350,0" Click="Button_ClickHome" Background="{x:Null}" FontSize="20" FontFamily="Arial Black" FontWeight="Bold" Foreground="#FFD2D2D2" BorderBrush="{x:Null}" Height="27" VerticalAlignment="Top"/>
+        <Button Content="Profile" Margin="222,4,477,0" Click="Button_ClickProfile" Background="{x:Null}" FontSize="25" FontFamily="Arial Black" FontWeight="Bold" Foreground="White" BorderBrush="{x:Null}" Height="27" VerticalAlignment="Top"/>
+        <Button Content="Games list" Margin="470,9,172,0" Click="Button_ClickList" Background="{x:Null}" FontSize="20" FontFamily="Arial Black" FontWeight="Bold" Foreground="#FFD2D2D2" BorderBrush="{x:Null}" Height="27" VerticalAlignment="Top"/>
+        <Button Content="X" Click="Button_Click" Background="{x:Null}" FontSize="36" FontFamily="Microsoft Sans Serif" FontWeight="Bold" Foreground="#FF902929" BorderBrush="{x:Null}" Height="44" VerticalAlignment="Top" HorizontalAlignment="Right" Width="44" Cursor=""/>
+
+    </Grid>
+</Window>
