@@ -15,15 +15,20 @@
     <TabControl Background="White">
         <TabItem Header="Profil" BorderBrush="#FF00BFA0">
             <Grid Background="White">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="47*"/>
+                    <ColumnDefinition Width="53*"/>
+                </Grid.ColumnDefinitions>
 
-                <Rectangle Margin="44,0,555,0"
+                <Rectangle Margin="44,0,131,0"
                    Stroke="Black"
                    Height="337"
                    VerticalAlignment="Center"/>
                 <TextBox
+                    x:Name="UserNameTextBox"
                     Text="{Binding User.Name}"
                     IsReadOnly="True"
-                    FontSize="22" Margin="44,24,555,290"
+                    FontSize="22" Margin="44,24,131,290"
                     TextAlignment="Center"/>
 
             </Grid>
@@ -62,7 +67,7 @@
             </Grid>
         </TabItem>
         <TabItem Header="Game List" BorderBrush="#FF9E66F3">
-            <Grid Background="{DynamicResource MaterialDesign.Surface}">
+            <Grid Background="#FF20315A">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="*"/>
@@ -72,16 +77,17 @@
                 <TextBox
             Margin="20"
             Width="300"
-            materialDesign:HintAssist.Hint="Rechercher un jeu"
+            materialDesign:HintAssist.Hint="Seek a game ?"
             Style="{StaticResource MaterialDesignOutlinedTextBox}"
             Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}" />
 
                 <!-- LISTE DES JEUX -->
                 <ListView
-            Grid.Row="1"
-            Margin="20"
-            ItemsSource="{Binding FilteredGames}"
-            Style="{StaticResource MaterialDesignListView}">
+                    Grid.Row="1"
+                    Margin="20"
+                    ItemsSource="{Binding FilteredGames}"
+                    SelectedItem="{Binding SelectedGame}"
+                    Style="{StaticResource MaterialDesignListView}">
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <TextBlock

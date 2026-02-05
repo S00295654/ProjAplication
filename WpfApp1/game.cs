@@ -10,6 +10,9 @@ namespace WpfApp1
     public class Game
     {
         public string Name { get; set; }
+        public List<string> tags { get; set; }
+        public List<string> genre { get; set; }
+        public List<string> device { get; set; }
     }
     public class Game1
     {
