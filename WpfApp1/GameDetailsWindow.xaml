@@ -2,20 +2,26 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Game details"
-        Height="300"
-        Width="400">
+        Height="364"
+        Width="493">
 
     <StackPanel Margin="20">
         <TextBlock
             Text="{Binding Name}"
             FontSize="24"
             FontWeight="Bold"
-            Margin="0,0,0,10"/>
+            Margin="0,0,0,10"/> 
 
-        <TextBlock Text="Genres:" FontWeight="SemiBold"/>
+        <TextBlock Text="Realease date:" FontWeight="SemiBold"/>
+        <ItemsControl ItemsSource="{Binding release}"/>
+
+        <TextBlock Text="Platforms:" FontWeight="SemiBold" Margin="0,10,0,0"/>
         <ItemsControl ItemsSource="{Binding genre}"/>
 
         <TextBlock Text="Platforms:" FontWeight="SemiBold" Margin="0,10,0,0"/>
         <ItemsControl ItemsSource="{Binding device}"/>
+
+        <TextBlock Text="Tags:" FontWeight="SemiBold" Margin="0,10,0,0"/>
+        <ItemsControl ItemsSource="{Binding tags}"/>
     </StackPanel>
 </Window>

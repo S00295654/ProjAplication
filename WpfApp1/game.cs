@@ -13,6 +13,7 @@ namespace WpfApp1
         public List<string> tags { get; set; }
         public List<string> genre { get; set; }
         public List<string> device { get; set; }
+        public List<string> release { get; set; }
     }
     public class Game1
     {

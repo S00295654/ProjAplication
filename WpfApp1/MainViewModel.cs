@@ -59,9 +59,27 @@ namespace WpfApp1
             new Game { Name = "Star Wars The Old Republic" }
         };
             User = new User("New User");
+            Testcontent(AllGames);
 
 
             FilteredGames = new ObservableCollection<Game>(AllGames);
+        }
+
+        public void Testcontent(ObservableCollection<Game> Allgames)
+        {
+            Allgames[0].release = new List<string>{
+                "February 25, 2022"
+            }; 
+            Allgames[0].genre= new List<string>{
+                "Adventure"
+            };
+            Allgames[0].device = new List<string>{
+                "PC"
+            };
+            Allgames[0].tags = new List<string>{
+                "Die and Retry"
+            };
+
         }
 
         private void Filter()
