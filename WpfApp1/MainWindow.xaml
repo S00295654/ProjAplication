@@ -11,62 +11,166 @@
         TextElement.Foreground="{DynamicResource MaterialDesign.Body}"
         TextElement.FontSize="14"
         FontFamily="{DynamicResource MaterialDesignFont}"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="694" Width="800">
     <TabControl Background="White">
-        <TabItem Header="Profil" BorderBrush="#FF00BFA0">
+        <TabItem Header="" BorderBrush="#FF00BFA0" Background="White">
             <Grid Background="White">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="47*"/>
-                    <ColumnDefinition Width="53*"/>
+                    <ColumnDefinition Width="245*"/>
+                    <ColumnDefinition Width="131*"/>
+                    <ColumnDefinition Width="424*"/>
                 </Grid.ColumnDefinitions>
 
-                <Rectangle Margin="44,0,131,0"
+
+                <!-- Dispplay name of tabs -->
+
+                <TextBlock
+                Text="Profile"
+                Foreground="#FF7952C0"
+                FontWeight="SemiBold"
+                Panel.ZIndex="100"
+                IsHitTestVisible="False"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top" Margin="117,-32,0,0" Height="17" Width="44" FontSize="14"/>
+                <TextBlock
+                Text="Home"
+                Foreground="Gray"
+                FontWeight="SemiBold"
+                Panel.ZIndex="100"
+                IsHitTestVisible="False"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top" Margin="5,-32,0,0" Grid.Column="2" Height="17" Width="45" FontSize="14"/>
+
+                <TextBlock
+                Text="Game List"
+                Foreground="Gray"
+                FontWeight="SemiBold"
+                Panel.ZIndex="100"
+                IsHitTestVisible="False"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top" Margin="259,-32,0,0" Grid.Column="2" Height="17" Width="69" FontSize="14"/>
+
+                <Rectangle Margin="44,25,0,0"
                    Stroke="Black"
                    Height="337"
-                   VerticalAlignment="Center"/>
+                   VerticalAlignment="Top"/>
+
+                <!-- Image of profil -->
+                <Image
+                Source="{Binding User.ProfileImage}"
+                Height="150"
+                VerticalAlignment="Top"
+                Margin="68,101,27,0"/>
+
                 <TextBox
                     x:Name="UserNameTextBox"
                     Text="{Binding User.Name}"
                     IsReadOnly="True"
-                    FontSize="22" Margin="44,24,131,290"
-                    TextAlignment="Center"/>
+                    FontSize="22" Margin="44,24,0,0"
+                    TextAlignment="Center" Height="72" VerticalAlignment="Top"/>
 
+                <!-- Decrition -->
+                <TextBlock
+                    Text="{Binding User.Description}"
+                    TextWrapping="Wrap"
+                    FontSize="16"
+                    Margin="44,193,0,0"
+                    TextAlignment="Center" Height="169" VerticalAlignment="Top"/>
             </Grid>
         </TabItem>
 
-        <!-- TAB 1 -->
-        <TabItem Header="Home" Background="#FF0027FF">
+        <!-- TAB 1 HOME -->
+        <TabItem Header="" Background="#FF0027FF">
             <Grid Background="#FF20315A">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="15*"/>
-                    <ColumnDefinition Width="382*"/>
+                    <ColumnDefinition Width="47*"/>
+                    <ColumnDefinition Width="753*"/>
                 </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="44"/>
+                    <RowDefinition Height="184"/>
+                    <!-- Label Current Games -->
+                    <!-- ItemsControl -->
+                    <RowDefinition Height="Auto" MinHeight="166"/>
+                    <!-- Label Planning to Play -->
+                    <RowDefinition/>
+                    <!-- TextBox etc -->
+                </Grid.RowDefinitions>
 
-                <Rectangle Margin="14,79,44,0" Stroke="Black" Height="107" VerticalAlignment="Top" Grid.Column="1"/>
-                <Rectangle Height="101" Stroke="Black" VerticalAlignment="Top" Margin="14,228,44,0" Grid.Column="1"/>
+                <Rectangle Margin="14,0,44,0" Stroke="Black" Height="107" VerticalAlignment="Center" Grid.Column="1" Grid.Row="1"/>
+                <Rectangle Height="101" Stroke="Black" VerticalAlignment="Top" Margin="14,55,44,0" Grid.Column="1" Grid.Row="2                            "/>
 
-                <TextBox Margin="14,349,400,0"
+                <TextBox Margin="14,6,400,0"
              TextWrapping="Wrap"
              Text="TextBox"
              VerticalAlignment="Top"
              Height="112"
-             Background="#FF20315A" Grid.Column="1"/>
+             Background="#FF20315A" Grid.Column="1" Grid.Row="3"/>
 
                 <Label Content="Current Games"
-           Margin="14,44,0,0"
+           Margin="14,2,0,0"
            FontSize="20"
            Foreground="#FFD0D0D0"
-           VerticalAlignment="Top" Grid.Column="1"/>
+           VerticalAlignment="Top" Grid.Column="1" Height="32" Grid.Row="1"/>
+                <!-- Affichage des jeux ajoutés par l'utilisateur -->
+                <ItemsControl ItemsSource="{Binding User.Games}" Margin="0,0,10,22" Grid.Row="1" Grid.Column="2">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Button Background="Transparent" BorderThickness="0" Padding="0"
+                    Command="{Binding DataContext.OpenGameCommand, RelativeSource={RelativeSource AncestorType=Window}}"
+                    CommandParameter="{Binding}">
+                                <Button.Content>
+                                    <StackPanel Margin="5">
+                                        <Image Source="{Binding Illustration}" Width="100" Height="100"/>
+                                        <TextBlock Text="{Binding Name}" FontSize="12" TextAlignment="Center"/>
+                                    </StackPanel>
+                                </Button.Content>
+                            </Button>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
 
                 <Label Content="Planning to play"
-           Margin="14,186,0,0"
-           FontSize="20"
-           Foreground="#FFCED0CA"
-           VerticalAlignment="Top" Grid.Column="1"/>
+                   FontSize="20" Foreground="#FFCED0CA"
+                   VerticalAlignment="Top"
+                   Grid.Column="1" Margin="14,10,-14,0" Height="32" Grid.Row="2"/>
+
+                <TextBlock
+                Text="Home"
+                Foreground="#FF7952C0"
+                FontWeight="SemiBold"
+                Panel.ZIndex="100"
+                IsHitTestVisible="False"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Top" Margin="0,-32,0,0" Grid.Column="1" Height="15" Width="38" FontSize="14"/>
+
+                <TextBlock
+                Text="Game List"
+                Foreground="Gray"
+                FontWeight="SemiBold"
+                Panel.ZIndex="100"
+                IsHitTestVisible="False"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top" Margin="605,-32,0,0" Grid.Column="1" Height="17" Width="66" FontSize="14"/>
+
+                <TextBlock
+                Text="Profile"
+                Foreground="Gray"
+                FontWeight="SemiBold"
+                Panel.ZIndex="100"
+                IsHitTestVisible="False"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top" Margin="86,-32,0,0" Grid.Column="1" Height="17" Width="45" FontSize="14"/>
 
             </Grid>
         </TabItem>
-        <TabItem Header="Game List" BorderBrush="#FF9E66F3">
+        <!-- TAB GAME LIST -->
+        <TabItem Header="" BorderBrush="#FF9E66F3">
             <Grid Background="#FF20315A">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
@@ -97,6 +201,32 @@
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
+                <TextBlock
+                Text="Home"
+                Foreground="Gray"
+                FontWeight="SemiBold"
+                Panel.ZIndex="100"
+                IsHitTestVisible="False"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Top" Margin="0,-32,0,0" Height="15" Width="38" FontSize="14"/>
+
+                <TextBlock
+                Text="Game List"
+                Foreground="#FF7952C0"
+                FontWeight="SemiBold"
+                Panel.ZIndex="100"
+                IsHitTestVisible="False"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Top" Margin="0,-32,102,0" Height="17" Width="63" FontSize="14"/>
+
+                <TextBlock
+                Text="Profile"
+                Foreground="Gray"
+                FontWeight="SemiBold"
+                Panel.ZIndex="100"
+                IsHitTestVisible="False"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top" Margin="117,-32,0,0" Height="17" Width="45" FontSize="14"/>
             </Grid>
         </TabItem>
     </TabControl>

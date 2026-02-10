@@ -19,10 +19,28 @@ namespace WpfApp1
     /// </summary>
     public partial class GameDetailsWindow : Window
     {
-        public GameDetailsWindow(Game game)
+        private User CurrentUser;
+        private Game CurrentGame;
+
+        public GameDetailsWindow(Game game,User user)
         {
             InitializeComponent();
             DataContext = game;
+
+            CurrentUser = user;
+            CurrentGame = game;
+        }
+        private void AddToUserGames_Click(object sender, RoutedEventArgs e)
+        {
+            if (!CurrentUser.Games.Contains(CurrentGame))
+            {
+                CurrentUser.Games.Add(CurrentGame);
+                MessageBox.Show($"{CurrentGame.Name} a été ajouté à votre liste !");
+            }
+            else
+            {
+                MessageBox.Show("Ce jeu est déjà dans votre liste.");
+            }
         }
     }
 }

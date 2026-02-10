@@ -69,9 +69,16 @@
     <Compile Include="GameDetailsWindow.xaml.cs">
       <DependentUpon>GameDetailsWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="GameDetailsWindowList.xaml.cs">
+      <DependentUpon>GameDetailsWindowList.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MainViewModel.cs" />
     <Compile Include="User.cs" />
     <Page Include="GameDetailsWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GameDetailsWindowList.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -138,6 +145,15 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\UserImage.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\GameTest.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\EldenRing.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\MaterialDesignThemes.5.3.0\build\MaterialDesignThemes.targets" Condition="Exists('..\packages\MaterialDesignThemes.5.3.0\build\MaterialDesignThemes.targets')" />
