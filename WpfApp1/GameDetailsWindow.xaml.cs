@@ -41,6 +41,7 @@ namespace WpfApp1
             {
                 MessageBox.Show("Ce jeu est déjà dans votre liste.");
             }
+            this.Close();
         }
     }
 }

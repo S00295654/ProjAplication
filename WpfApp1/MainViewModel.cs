@@ -50,16 +50,20 @@ namespace WpfApp1
                 Filter();
             }
         }
+        public ICommand EditUserCommand { get; set; }
 
         public MainViewModel()
         {
             AllGames = new ObservableCollection<Game>
         {
             new Game { Name = "Elden Ring" },
-            new Game { Name = "Minecraft" },
-            new Game { Name = "Hades" },
-            new Game { Name = "Hades 2" },
-            new Game { Name = "Star Wars The Old Republic" }
+            new Game { Name = "Minecraft", Illustration=new BitmapImage(new Uri("Images/Minecraft.jpg", UriKind.Relative)) },
+            new Game { Name = "Hades", Illustration=new BitmapImage(new Uri("Images/Hades.jpg", UriKind.Relative)) },
+            new Game { Name = "Hades 2", Illustration=new BitmapImage(new Uri("Images/Hades_2.jpeg", UriKind.Relative))},
+            new Game { Name = "Star Wars The Old Republic", Illustration=new BitmapImage(new Uri("Images/SWTOR.jpg", UriKind.Relative)) },
+            new Game { Name = "Overwatch" },
+            new Game { Name = "CS2" },
+            new Game { Name = "Tetris" }
         };
             User = new User("New User");
             User.Description = "There are no description yet... However it can change when you want. Test Test Test Test Test Test Test Test Test Test Test Test Test Test";
@@ -82,6 +86,12 @@ namespace WpfApp1
                     window.Show();
                 }
             });
+            EditUserCommand = new RelayCommand(obj =>
+            {
+                var window = new EditUserWindow(User);
+                window.ShowDialog(); // Modal
+                                     // Les modifications sont déjà appliquées directement via bindings
+            });
         }
 
         public void Testcontent(ObservableCollection<Game> Allgames)
@@ -101,7 +111,17 @@ namespace WpfApp1
             };
             foreach (Game game in Allgames)
             {
-                game.Illustration = new BitmapImage(new Uri("Images/GameTest.png", UriKind.Relative));
+                if (game.Illustration==null)
+                    game.Illustration = new BitmapImage(new Uri("Images/GameTest.png", UriKind.Relative));
+                game.Time = 0;
+                if (game.genre==null)
+                    game.genre = new List<string>();
+                if (game.device==null)
+                    game.device = new List<string>();
+
+                game.State = "Choose state";
+                game.Score = 0;
+                game.Time = 0;
             }
             Allgames[0].Illustration= new BitmapImage(new Uri("Images/EldenRing.jpg", UriKind.Relative));
 

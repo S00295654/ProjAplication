@@ -24,12 +24,13 @@ namespace WpfApp1
 
         public GameDetailsWindowList(Game game, ObservableCollection<Game> games)
         {
-            InitializeComponent();
+            
 
             // DataContext = Game pour bindings simples
             this.DataContext = game;
 
             _games = games; // garder la collection pour le Remove
+            InitializeComponent();
         }
 
         private void ConfirmButton_Click(object sender, RoutedEventArgs e)
@@ -47,4 +48,4 @@ namespace WpfApp1
             }
         }
     }
-}
+ }
