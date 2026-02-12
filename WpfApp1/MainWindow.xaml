@@ -113,23 +113,39 @@
            Foreground="#FFD0D0D0"
            VerticalAlignment="Top" Grid.Column="1" Height="32" Grid.Row="1"/>
                 <!-- Affichage des jeux ajoutés par l'utilisateur -->
-                <ItemsControl ItemsSource="{Binding User.Games}" Margin="0,0,10,22" Grid.Row="1" Grid.Column="2">
+                <ItemsControl ItemsSource="{Binding User.Games}"
+              Grid.Row="1"
+              Grid.Column="1"
+              Margin="10">
+
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
                             <WrapPanel />
                         </ItemsPanelTemplate>
                     </ItemsControl.ItemsPanel>
+
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <Button Background="Transparent" BorderThickness="0" Padding="0"
-                    Command="{Binding DataContext.OpenGameCommand, RelativeSource={RelativeSource AncestorType=Window}}"
+                            <Button Width="120"
+                    Height="150"
+                    Margin="5"
+                    Background="Transparent"
+                    BorderThickness="0"
+                    Command="{Binding DataContext.OpenGameCommand,
+                              RelativeSource={RelativeSource AncestorType=Window}}"
                     CommandParameter="{Binding}">
-                                <Button.Content>
-                                    <StackPanel Margin="5">
-                                        <Image Source="{Binding Illustration}" Width="100" Height="100"/>
-                                        <TextBlock Text="{Binding Name}" FontSize="12" TextAlignment="Center"/>
-                                    </StackPanel>
-                                </Button.Content>
+
+                                <StackPanel>
+                                    <Image Source="{Binding Illustration}"
+                           Width="100"
+                           Height="100"
+                           Stretch="UniformToFill"/>
+
+                                    <TextBlock Text="{Binding Name}"
+                               FontSize="12"
+                               TextAlignment="Center"/>
+                                </StackPanel>
+
                             </Button>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using System.Windows.Input.StylusPlugIns;
 using System.Windows.Media.Imaging;
 
@@ -12,6 +13,7 @@ namespace WpfApp1
 {
     public class Game
     {
+        public ICommand RemoveCommand { get; set; }
         public string Name { get; set; }
         public List<string> tags { get; set; }
         public List<string> genre { get; set; }

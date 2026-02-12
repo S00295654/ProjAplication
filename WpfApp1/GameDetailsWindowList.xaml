@@ -2,24 +2,29 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Game Details" Height="445" Width="714">
-
     <StackPanel Margin="20">
+        <!-- Nom du jeu -->
         <TextBlock Text="{Binding Name}" FontSize="20" FontWeight="Bold" Margin="0,0,0,10"/>
+
+        <!-- Image -->
         <Image Source="{Binding Illustration}" Width="150" Height="150" Margin="0,0,0,10"/>
 
+        <!-- Time -->
         <StackPanel Orientation="Horizontal" Margin="0,5">
             <TextBlock Text="Time (h):" Width="100"/>
             <TextBox Text="{Binding Time, UpdateSourceTrigger=PropertyChanged}" Width="50"/>
         </StackPanel>
 
+        <!-- Score -->
         <StackPanel Orientation="Horizontal" Margin="0,5">
             <TextBlock Text="Score (0-10):" Width="100"/>
             <TextBox Text="{Binding Score, UpdateSourceTrigger=PropertyChanged}" Width="50"/>
         </StackPanel>
 
+        <!-- State -->
         <StackPanel Orientation="Horizontal" Margin="0,5">
             <TextBlock Text="State:" Width="100"/>
-            <ComboBox SelectedItem="{Binding State}" Width="120">
+            <ComboBox SelectedValue="{Binding State, UpdateSourceTrigger=PropertyChanged}" Width="120">
                 <ComboBoxItem Content="Stop"/>
                 <ComboBoxItem Content="Playing"/>
                 <ComboBoxItem Content="Planned"/>
@@ -27,7 +32,10 @@
             </ComboBox>
         </StackPanel>
 
-        <Button Content="Remove from list" Margin="0,20,0,0" 
-                Command="{Binding RemoveCommand}" Width="150"/>
+        <!-- Boutons -->
+        <StackPanel Orientation="Horizontal" Margin="0,20,0,0">
+            <Button Content="Confirm Changes" Width="150" Margin="0,0,10,0" Click="ConfirmButton_Click"/>
+            <Button Content="Remove from list" Width="150" Click="RemoveButton_Click"/>
+        </StackPanel>
     </StackPanel>
 </Window>

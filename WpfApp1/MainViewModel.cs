@@ -64,6 +64,13 @@ namespace WpfApp1
             User = new User("New User");
             User.Description = "There are no description yet... However it can change when you want. Test Test Test Test Test Test Test Test Test Test Test Test Test Test";
             Testcontent(AllGames);
+            foreach (var game in User.Games)
+            {
+                game.RemoveCommand = new RelayCommand(obj =>
+                {
+                    User.Games.Remove(game);
+                });
+            }
 
 
             FilteredGames = new ObservableCollection<Game>(AllGames);
@@ -71,10 +78,7 @@ namespace WpfApp1
             {
                 if (game is Game g)
                 {
-                    var window = new GameDetailsWindowList
-                    {
-                        DataContext = g
-                    };
+                    var window = new GameDetailsWindowList(g, User.Games);
                     window.Show();
                 }
             });

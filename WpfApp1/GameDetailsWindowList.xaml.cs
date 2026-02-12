@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,9 +20,31 @@ namespace WpfApp1
     /// </summary>
     public partial class GameDetailsWindowList : Window
     {
-        public GameDetailsWindowList()
+        private ObservableCollection<Game> _games;
+
+        public GameDetailsWindowList(Game game, ObservableCollection<Game> games)
         {
             InitializeComponent();
+
+            // DataContext = Game pour bindings simples
+            this.DataContext = game;
+
+            _games = games; // garder la collection pour le Remove
+        }
+
+        private void ConfirmButton_Click(object sender, RoutedEventArgs e)
+        {
+            // Tout est déjà modifié via les bindings
+            this.Close();
+        }
+
+        private void RemoveButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (this.DataContext is Game game && _games.Contains(game))
+            {
+                _games.Remove(game);
+                this.Close();
+            }
         }
     }
 }
