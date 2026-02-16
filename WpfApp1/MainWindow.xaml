@@ -104,7 +104,7 @@
                     <!-- TextBox etc -->
                 </Grid.RowDefinitions>
 
-                <Rectangle Margin="14,0,44,0" Stroke="Black" Height="107" VerticalAlignment="Center" Grid.Column="1" Grid.Row="1"/>
+                <Rectangle Margin="14,34,44,0" Stroke="Black" Height="138" VerticalAlignment="Top" Grid.Column="1" Grid.Row="1"/>
                 <Rectangle Height="101" Stroke="Black" VerticalAlignment="Top" Margin="14,55,44,0" Grid.Column="1" Grid.Row="2                            "/>
 
                 <TextBox Margin="14,6,400,0"
@@ -123,7 +123,7 @@
                 <ItemsControl ItemsSource="{Binding User.Games}"
               Grid.Row="1"
               Grid.Column="1"
-              Margin="10">
+              Margin="10,25,10,161" Grid.RowSpan="2">
 
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
