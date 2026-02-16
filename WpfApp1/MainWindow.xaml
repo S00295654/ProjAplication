@@ -222,10 +222,20 @@
                     Style="{StaticResource MaterialDesignListView}">
                     <ListView.ItemTemplate>
                         <DataTemplate>
-                            <TextBlock
-                        Text="{Binding Name}"
-                        FontSize="18"
-                        Margin="10"/>
+                            <StackPanel Orientation="Horizontal" Margin="5">
+
+                                <!-- Image du jeu -->
+                                <Image Source="{Binding Illustration}"
+                   Width="60"
+                   Height="60"
+                   Stretch="UniformToFill"
+                   Margin="0,0,10,0"/>
+
+                                <!-- Nom du jeu -->
+                                <TextBlock Text="{Binding Name}"
+                       VerticalAlignment="Center"
+                       FontSize="18"/>
+                            </StackPanel>
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
