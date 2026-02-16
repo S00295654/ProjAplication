@@ -1,0 +1,32 @@
+﻿<Window x:Class="WpfApp1.AddGameWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfApp1"
+        mc:Ignorable="d"
+        Title="AddGameWindow" Height="492" Width="800">
+    <StackPanel Margin="20">
+
+        <TextBlock Text="Name"/>
+        <TextBox Text="{Binding Name}" Margin="0,0,0,10"/>
+
+        <TextBlock Text="Genre (comma separated)"/>
+        <TextBox x:Name="GenreBox" Margin="0,0,0,10"/>
+
+        <TextBlock Text="Device (comma separated)"/>
+        <TextBox x:Name="DeviceBox" Margin="0,0,0,10"/>
+
+        <TextBlock Text="Release Date"/>
+        <TextBox x:Name="ReleaseBox" Margin="0,0,0,10"/>
+
+        <TextBlock Text="Illustration" Margin="0,0,0,10"/>
+        <Button Content="Choose Image"
+        Height="30"
+        Margin="0,0,0,30"
+        Click="ChooseImage_Click"/>
+        <Button Content="Add"
+                Height="50"
+                Click="Add_Click"/>
+    </StackPanel>
+</Window>

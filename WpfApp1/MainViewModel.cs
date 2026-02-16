@@ -51,6 +51,7 @@ namespace WpfApp1
             }
         }
         public ICommand EditUserCommand { get; set; }
+        public ICommand AddGameCommand { get; set; }
 
         public MainViewModel()
         {
@@ -61,8 +62,8 @@ namespace WpfApp1
             new Game { Name = "Hades", Illustration=new BitmapImage(new Uri("Images/Hades.jpg", UriKind.Relative)) },
             new Game { Name = "Hades 2", Illustration=new BitmapImage(new Uri("Images/Hades_2.jpeg", UriKind.Relative))},
             new Game { Name = "Star Wars The Old Republic", Illustration=new BitmapImage(new Uri("Images/SWTOR.jpg", UriKind.Relative)) },
-            new Game { Name = "Overwatch" },
-            new Game { Name = "CS2" },
+            new Game { Name = "Overwatch", Illustration=new BitmapImage(new Uri("Images/overwatch.jpg", UriKind.Relative)) },
+            new Game { Name = "CS2",  Illustration=new BitmapImage(new Uri("Images/CS2.png", UriKind.Relative)) },
             new Game { Name = "Tetris" }
         };
             User = new User("New User");
@@ -91,6 +92,36 @@ namespace WpfApp1
                 var window = new EditUserWindow(User);
                 window.ShowDialog(); // Modal
                                      // Les modifications sont déjà appliquées directement via bindings
+            });
+            AddGameCommand = new RelayCommand(obj =>
+            {
+                var window = new AddGameWindow();
+
+                if (window.ShowDialog() == true)
+                {
+                    Game newGame = window.NewGame;
+
+                    // Sécurisation
+                    if (newGame.genre == null)
+                        newGame.genre = new List<string>();
+                    if (newGame.device == null)
+                        newGame.device = new List<string>();
+                    if (newGame.tags == null)
+                        newGame.tags = new List<string>();
+                    if (newGame.release == null)
+                        newGame.release = new List<string>();
+
+                    if (newGame.Illustration == null)
+                        newGame.Illustration = new BitmapImage(
+                            new Uri("Images/GameTest.png", UriKind.Relative));
+
+                    newGame.State = "Choose state";
+                    newGame.Score = newGame.Score;
+                    newGame.Time = newGame.Time;
+
+                    AllGames.Add(newGame);
+                    Filter();
+                }
             });
         }
 

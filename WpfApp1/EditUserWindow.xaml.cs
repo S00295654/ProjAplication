@@ -41,6 +41,7 @@ namespace WpfApp1
             // Les modifications sont déjà dans User via les bindings
             this.DialogResult = true;
             this.Close();
+            MainWindow.reloadImage.Source = User.ProfileImage;
         }
 
         private void CancelButton_Click(object sender, RoutedEventArgs e)

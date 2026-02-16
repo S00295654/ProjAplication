@@ -52,13 +52,14 @@
 
                 <Rectangle Margin="44,25,0,0"
                    Stroke="Black"
-                   Height="337"
+                   Height="439"
                    VerticalAlignment="Top"/>
 
                 <!-- Image of profil -->
-                <Image
+                <Image x:Name="imagedeprofil"
                 Source="{Binding User.ProfileImage}"
                 Height="150"
+                Width="150"
                 VerticalAlignment="Top"
                 Margin="68,101,27,0"/>
 
@@ -74,8 +75,8 @@
                     Text="{Binding User.Description}"
                     TextWrapping="Wrap"
                     FontSize="16"
-                    Margin="44,193,0,0"
-                    TextAlignment="Center" Height="169" VerticalAlignment="Top"/>
+                    Margin="42,276,1,0"
+                    TextAlignment="Center" Height="188" VerticalAlignment="Top"/>
 
                 <Button Content="Edit Profile"
                         Width="120"
@@ -265,6 +266,15 @@
                 IsHitTestVisible="False"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Top" Margin="117,-32,0,0" Height="17" Width="45" FontSize="14"/>
+                <Button
+                Content="Add Game"
+                Width="120"
+                Height="35"
+                Margin="20,0,0,0"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center"
+                Command="{Binding AddGameCommand}"
+                Style="{StaticResource MaterialDesignRaisedButton}" />
             </Grid>
         </TabItem>
     </TabControl>

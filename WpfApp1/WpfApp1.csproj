@@ -66,6 +66,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AddGameWindow.xaml.cs">
+      <DependentUpon>AddGameWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="EditUserWindow.xaml.cs">
       <DependentUpon>EditUserWindow.xaml</DependentUpon>
     </Compile>
@@ -77,6 +80,10 @@
     </Compile>
     <Compile Include="MainViewModel.cs" />
     <Compile Include="User.cs" />
+    <Page Include="AddGameWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="EditUserWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -173,6 +180,12 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\Minecraft.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\CS2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Overwatch.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\MaterialDesignThemes.5.3.0\build\MaterialDesignThemes.targets" Condition="Exists('..\packages\MaterialDesignThemes.5.3.0\build\MaterialDesignThemes.targets')" />
