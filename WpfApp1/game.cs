@@ -34,11 +34,15 @@ namespace WpfApp1
             set { score = value; OnPropertyChanged(); }
         }
 
-        private string state;
-        public string State
+        private GameState state;
+        public GameState State
         {
             get => state;
-            set { state = value; OnPropertyChanged(); }
+            set
+            {
+                state = value;
+                OnPropertyChanged();
+            }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

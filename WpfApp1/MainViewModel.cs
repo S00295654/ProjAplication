@@ -7,6 +7,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
 
@@ -16,6 +17,7 @@ namespace WpfApp1
     {
         public ICommand OpenGameCommand { get; }
         private Game selectedGame;
+        public ICollectionView PlannedGamesView { get; }
         public Game SelectedGame
         {
             get => selectedGame;
@@ -37,6 +39,7 @@ namespace WpfApp1
 
         public ObservableCollection<Game> AllGames { get; set; }
         public ObservableCollection<Game> FilteredGames { get; set; }
+        public ICollectionView GamesGroupedView { get; }
         public User User { get; set; }
 
         private string searchText;
@@ -52,6 +55,16 @@ namespace WpfApp1
         }
         public ICommand EditUserCommand { get; set; }
         public ICommand AddGameCommand { get; set; }
+        private void Game_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(Game.State))
+            {
+                GamesGroupedView.Refresh();
+            }
+        }
+
+
+
 
         public MainViewModel()
         {
@@ -76,6 +89,16 @@ namespace WpfApp1
                     User.Games.Remove(game);
                 });
             }
+            GamesGroupedView = new ListCollectionView(User.Games);
+
+            GamesGroupedView.GroupDescriptions.Add(
+                new PropertyGroupDescription(nameof(Game.State))
+            );
+
+            GamesGroupedView.SortDescriptions.Add(
+                new SortDescription(nameof(Game.State), ListSortDirection.Ascending)
+            );
+            
 
 
             FilteredGames = new ObservableCollection<Game>(AllGames);
@@ -115,7 +138,7 @@ namespace WpfApp1
                         newGame.Illustration = new BitmapImage(
                             new Uri("Images/GameTest.png", UriKind.Relative));
 
-                    newGame.State = "Choose state";
+                    newGame.State = GameState.Playing;
                     newGame.Score = newGame.Score;
                     newGame.Time = newGame.Time;
 
@@ -123,6 +146,17 @@ namespace WpfApp1
                     Filter();
                 }
             });
+            User.Games.CollectionChanged += (s, e) =>
+            {
+                if (e.NewItems != null)
+                {
+                    foreach (Game g in e.NewItems)
+                    {
+                        g.PropertyChanged += Game_PropertyChanged;
+                    }
+                }
+            };
+
         }
 
         public void Testcontent(ObservableCollection<Game> Allgames)
@@ -150,7 +184,7 @@ namespace WpfApp1
                 if (game.device==null)
                     game.device = new List<string>();
 
-                game.State = "Choose state";
+                game.State = GameState.Playing;
                 game.Score = 0;
                 game.Time = 0;
             }
@@ -196,5 +230,14 @@ namespace WpfApp1
             add => CommandManager.RequerySuggested += value;
             remove => CommandManager.RequerySuggested -= value;
         }
+        
+    }
+
+    public enum GameState
+    {
+        Playing = 0,
+        Planned = 1,
+        Finished = 2,
+        Stop = 3
     }
 }

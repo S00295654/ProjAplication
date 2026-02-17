@@ -24,13 +24,13 @@ namespace WpfApp1
 
         public GameDetailsWindowList(Game game, ObservableCollection<Game> games)
         {
-            
 
+            InitializeComponent();
             // DataContext = Game pour bindings simples
+            StateComboBox.ItemsSource = Enum.GetValues(typeof(GameState));
             this.DataContext = game;
 
-            _games = games; // garder la collection pour le Remove
-            InitializeComponent();
+            _games = games;
         }
 
         private void ConfirmButton_Click(object sender, RoutedEventArgs e)
