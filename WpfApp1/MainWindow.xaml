@@ -45,7 +45,7 @@
                 </Grid>
 
 
-                <Rectangle Margin="44,25,44,0"
+                <Rectangle Margin="44,25,445,0"
                    Stroke="Black"
                    Height="439"
                    VerticalAlignment="Top"/>
@@ -56,13 +56,13 @@
                 Height="150"
                 Width="150"
                 VerticalAlignment="Top"
-                Margin="68,101,27,0"/>
+                Margin="124,102,526,0"/>
 
                 <TextBox
                     x:Name="UserNameTextBox"
                     Text="{Binding User.Name}"
                     IsReadOnly="True"
-                    FontSize="22" Margin="44,24,44,0"
+                    FontSize="22" Margin="44,25,445,0"
                     TextAlignment="Center" Height="72" VerticalAlignment="Top"/>
 
                 <!-- Decrition -->
@@ -70,7 +70,7 @@
                     Text="{Binding User.Description}"
                     TextWrapping="Wrap"
                     FontSize="16"
-                    Margin="44,276,44,0"
+                    Margin="44,276,445,0"
                     TextAlignment="Center" Height="188" VerticalAlignment="Top"/>
 
                 <Button Content="Edit Profile"
@@ -242,15 +242,16 @@
 
                                 <!-- Image du jeu -->
                                 <Image Source="{Binding Illustration}"
-                   Width="60"
-                   Height="60"
-                   Stretch="UniformToFill"
-                   Margin="0,0,10,0"/>
+                                   Width="60"
+                                   Height="60"
+                                   Stretch="UniformToFill"
+                                   Margin="0,0,10,0"/>
 
                                 <!-- Nom du jeu -->
                                 <TextBlock Text="{Binding Name}"
-                       VerticalAlignment="Center"
-                       FontSize="18"/>
+                                   Foreground="White"
+                                   VerticalAlignment="Center"
+                                   FontSize="18"/>
                             </StackPanel>
                         </DataTemplate>
                     </ListView.ItemTemplate>
