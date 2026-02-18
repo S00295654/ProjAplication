@@ -35,11 +35,11 @@ namespace WpfApp1
             if (!CurrentUser.Games.Contains(CurrentGame))
             {
                 CurrentUser.Games.Add(CurrentGame);
-                MessageBox.Show($"{CurrentGame.Name} a été ajouté à votre liste !");
+                MessageBox.Show($"{CurrentGame.Name} as been added to your list !");
             }
             else
             {
-                MessageBox.Show("Ce jeu est déjà dans votre liste.");
+                MessageBox.Show("This game is already in your list.");
             }
             this.Close();
         }

@@ -14,6 +14,15 @@ namespace WpfApp1
     
     public partial class App : Application
     {
-        public User User { get; set; } = new User("New User");
+
+        protected override void OnExit(ExitEventArgs e)
+        {
+            if (Current.MainWindow?.DataContext is MainViewModel vm)
+            {
+                SaveManager.Save(vm.User, vm.AllGames);
+            }
+
+            base.OnExit(e);
+        }
     }
 }

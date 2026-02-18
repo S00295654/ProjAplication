@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -27,6 +28,15 @@ namespace WpfApp1
             DataContext = new MainViewModel();
             reloadImage = imagedeprofil;
             
+        }
+        protected override void OnClosed(EventArgs e)
+        {
+            if (DataContext is MainViewModel vm)
+            {
+                SaveManager.Save(vm.User, vm.AllGames);
+            }
+
+            base.OnClosed(e);
         }
 
     }

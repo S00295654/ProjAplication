@@ -68,96 +68,139 @@ namespace WpfApp1
 
         public MainViewModel()
         {
-            AllGames = new ObservableCollection<Game>
-        {
-            new Game { Name = "Elden Ring" },
-            new Game { Name = "Minecraft", Illustration=new BitmapImage(new Uri("Images/Minecraft.jpg", UriKind.Relative)) },
-            new Game { Name = "Hades", Illustration=new BitmapImage(new Uri("Images/Hades.jpg", UriKind.Relative)) },
-            new Game { Name = "Hades 2", Illustration=new BitmapImage(new Uri("Images/Hades_2.jpeg", UriKind.Relative))},
-            new Game { Name = "Star Wars The Old Republic", Illustration=new BitmapImage(new Uri("Images/SWTOR.jpg", UriKind.Relative)) },
-            new Game { Name = "Overwatch", Illustration=new BitmapImage(new Uri("Images/overwatch.jpg", UriKind.Relative)) },
-            new Game { Name = "CS2",  Illustration=new BitmapImage(new Uri("Images/CS2.png", UriKind.Relative)) },
-            new Game { Name = "Tetris" }
-        };
-            User = new User("New User");
-            User.Description = "There are no description yet... However it can change when you want. Test Test Test Test Test Test Test Test Test Test Test Test Test Test";
-            Testcontent(AllGames);
-            foreach (var game in User.Games)
+            var save = SaveManager.Load();
+
+            if (save != null)
             {
-                game.RemoveCommand = new RelayCommand(obj =>
+                AllGames = new ObservableCollection<Game>(
+                    save.AllGames.Select(g => FromGameData(g))
+                );
+
+                User = new User(save.User.Name)
                 {
-                    User.Games.Remove(game);
-                });
+                    Description = save.User.Description,
+                    ProfileImage = !string.IsNullOrEmpty(save.User.ProfileImagePath)
+                        ? new BitmapImage(new Uri(save.User.ProfileImagePath, UriKind.Relative))
+                        : null
+                };
+
+                foreach (var g in save.User.Games)
+                {
+                    User.Games.Add(FromGameData(g));
+                }
             }
-            GamesGroupedView = new ListCollectionView(User.Games);
-
-            GamesGroupedView.GroupDescriptions.Add(
-                new PropertyGroupDescription(nameof(Game.State))
-            );
-
-            GamesGroupedView.SortDescriptions.Add(
-                new SortDescription(nameof(Game.State), ListSortDirection.Ascending)
-            );
-            
-
-
-            FilteredGames = new ObservableCollection<Game>(AllGames);
-            OpenGameCommand = new RelayCommand(game =>
+            else
             {
-                if (game is Game g)
+                AllGames = new ObservableCollection<Game>
                 {
-                    var window = new GameDetailsWindowList(g, User.Games);
-                    window.Show();
-                }
-            });
-            EditUserCommand = new RelayCommand(obj =>
-            {
-                var window = new EditUserWindow(User);
-                window.ShowDialog(); // Modal
-                                     // Les modifications sont déjà appliquées directement via bindings
-            });
-            AddGameCommand = new RelayCommand(obj =>
-            {
-                var window = new AddGameWindow();
-
-                if (window.ShowDialog() == true)
+                    new Game { Name = "Elden Ring" },
+                    new Game { Name = "Minecraft", Illustration=new BitmapImage(new Uri("Images/Minecraft.jpg", UriKind.Relative)) },
+                    new Game { Name = "Hades", Illustration=new BitmapImage(new Uri("Images/Hades.jpg", UriKind.Relative)) },
+                    new Game { Name = "Hades 2", Illustration=new BitmapImage(new Uri("Images/Hades_2.jpeg", UriKind.Relative))},
+                    new Game { Name = "Star Wars The Old Republic", Illustration=new BitmapImage(new Uri("Images/SWTOR.jpg", UriKind.Relative)) },
+                    new Game { Name = "Overwatch", Illustration=new BitmapImage(new Uri("Images/overwatch.jpg", UriKind.Relative)) },
+                    new Game { Name = "CS2",  Illustration=new BitmapImage(new Uri("Images/CS2.png", UriKind.Relative)) },
+                    new Game { Name = "Tetris" }
+                };
+                User = new User("New User");
+                User.Description = "There are no description yet... However it can change when you want. Test Test Test Test Test Test Test Test Test Test Test Test Test Test";
+                Testcontent(AllGames);
+            }
+                foreach (var game in User.Games)
                 {
-                    Game newGame = window.NewGame;
-
-                    // Sécurisation
-                    if (newGame.genre == null)
-                        newGame.genre = new List<string>();
-                    if (newGame.device == null)
-                        newGame.device = new List<string>();
-                    if (newGame.tags == null)
-                        newGame.tags = new List<string>();
-                    if (newGame.release == null)
-                        newGame.release = new List<string>();
-
-                    if (newGame.Illustration == null)
-                        newGame.Illustration = new BitmapImage(
-                            new Uri("Images/GameTest.png", UriKind.Relative));
-
-                    newGame.State = GameState.Playing;
-                    newGame.Score = newGame.Score;
-                    newGame.Time = newGame.Time;
-
-                    AllGames.Add(newGame);
-                    Filter();
-                }
-            });
-            User.Games.CollectionChanged += (s, e) =>
-            {
-                if (e.NewItems != null)
-                {
-                    foreach (Game g in e.NewItems)
+                    game.RemoveCommand = new RelayCommand(obj =>
                     {
-                        g.PropertyChanged += Game_PropertyChanged;
-                    }
+                        User.Games.Remove(game);
+                    });
                 }
-            };
+                GamesGroupedView = new ListCollectionView(User.Games);
 
+                GamesGroupedView.GroupDescriptions.Add(
+                    new PropertyGroupDescription(nameof(Game.State))
+                );
+
+                GamesGroupedView.SortDescriptions.Add(
+                    new SortDescription(nameof(Game.State), ListSortDirection.Ascending)
+                );
+
+
+
+                FilteredGames = new ObservableCollection<Game>(AllGames);
+                OpenGameCommand = new RelayCommand(game =>
+                {
+                    if (game is Game g)
+                    {
+                        var window = new GameDetailsWindowList(g, User.Games, User);
+                        window.Show();
+                    }
+                });
+                EditUserCommand = new RelayCommand(obj =>
+                {
+                    var window = new EditUserWindow(User);
+                    window.ShowDialog(); // Modal
+                                         // Les modifications sont déjà appliquées directement via bindings
+                });
+                AddGameCommand = new RelayCommand(obj =>
+                {
+                    var window = new AddGameWindow();
+
+                    if (window.ShowDialog() == true)
+                    {
+                        Game newGame = window.NewGame;
+
+                        // Sécurisation
+                        if (newGame.genre == null)
+                            newGame.genre = new List<string>();
+                        if (newGame.device == null)
+                            newGame.device = new List<string>();
+                        if (newGame.tags == null)
+                            newGame.tags = new List<string>();
+                        if (newGame.release == null)
+                            newGame.release = new List<string>();
+
+                        if (newGame.Illustration == null)
+                            newGame.Illustration = new BitmapImage(
+                                new Uri("Images/GameTest.png", UriKind.Relative));
+
+                        newGame.State = GameState.Playing;
+                        newGame.Score = newGame.Score;
+                        newGame.Time = newGame.Time;
+
+                        AllGames.Add(newGame);
+                        Filter();
+                    }
+                });
+                User.Games.CollectionChanged += (s, e) =>
+                {
+                    if (e.NewItems != null)
+                    {
+                        foreach (Game g in e.NewItems)
+                        {
+                            g.PropertyChanged += Game_PropertyChanged;
+                        }
+                    }
+                };
+                
+            
         }
+        private Game FromGameData(GameData g)
+        {
+            return new Game
+            {
+                Name = g.Name,
+                tags = g.tags ?? new List<string>(),
+                genre = g.genre ?? new List<string>(),
+                device = g.device ?? new List<string>(),
+                release = g.release ?? new List<string>(),
+                Illustration = !string.IsNullOrEmpty(g.ImagePath)
+                    ? new BitmapImage(new Uri(g.ImagePath, UriKind.Relative))
+                    : null,
+                Time = g.Time,
+                Score = g.Score,
+                State = g.State
+            };
+        }
+
 
         public void Testcontent(ObservableCollection<Game> Allgames)
         {
@@ -166,13 +209,13 @@ namespace WpfApp1
                 "February 25, 2022"
             }; 
             Allgames[0].genre= new List<string>{
-                "Adventure"
+                "Action","role-playing"
             };
             Allgames[0].device = new List<string>{
-                "PC"
+                "PlayStation 4","PlayStation 5","Windows","Xbox One","Xbox Series X/S","Nintendo Switch 2"
             };
             Allgames[0].tags = new List<string>{
-                "Die and Retry"
+                "Windows, PS4, PS5, Xbox One, Series X/S :February 25 2022", "Nintendo Switch 2 2026"
             };
             foreach (Game game in Allgames)
             {
@@ -209,6 +252,7 @@ namespace WpfApp1
         public event PropertyChangedEventHandler PropertyChanged;
         void OnPropertyChanged([CallerMemberName] string n = null)
             => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(n));
+
     }
     public class RelayCommand : ICommand
     {

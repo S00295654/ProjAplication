@@ -12,6 +12,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Xml.Linq;
 
 namespace WpfApp1
 {
@@ -20,9 +21,11 @@ namespace WpfApp1
     /// </summary>
     public partial class GameDetailsWindowList : Window
     {
+        private Game _game;
         private ObservableCollection<Game> _games;
+        private User User;
 
-        public GameDetailsWindowList(Game game, ObservableCollection<Game> games)
+        public GameDetailsWindowList(Game game, ObservableCollection<Game> games, User user)
         {
 
             InitializeComponent();
@@ -31,6 +34,8 @@ namespace WpfApp1
             this.DataContext = game;
 
             _games = games;
+            _game= game;
+            User = user;
         }
 
         private void ConfirmButton_Click(object sender, RoutedEventArgs e)
@@ -46,6 +51,11 @@ namespace WpfApp1
                 _games.Remove(game);
                 this.Close();
             }
+        }
+        private void InfoButton_Click(object sender, RoutedEventArgs e)
+        {
+            var window = new GameDetailsWindow(_game, User);
+            window.Show();
         }
     }
  }

@@ -4,8 +4,8 @@
         Title="Game details"
         Height="540"
         Width="493">
-
-    <StackPanel Margin="20">
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel Margin="20">
         <Image Source="{Binding Illustration}" Width="150" Height="150" Margin="0,0,0,10"/>
         <TextBlock
             Text="{Binding Name}"
@@ -16,10 +16,10 @@
         <TextBlock Text="Realease date:" FontWeight="SemiBold"/>
         <ItemsControl ItemsSource="{Binding release}"/>
 
-        <TextBlock Text="Platforms:" FontWeight="SemiBold" Margin="0,10,0,0"/>
+        <TextBlock Text="Genre:" FontWeight="SemiBold" Margin="0,10,0,0"/>
         <ItemsControl ItemsSource="{Binding genre}"/>
 
-        <TextBlock Text="Platforms:" FontWeight="SemiBold" Margin="0,10,0,0"/>
+        <TextBlock Text="Device:" FontWeight="SemiBold" Margin="0,10,0,0"/>
         <ItemsControl ItemsSource="{Binding device}"/>
 
         <TextBlock Text="Tags:" FontWeight="SemiBold" Margin="0,10,0,0"/>
@@ -30,4 +30,5 @@
         HorizontalAlignment="Left"
         Click="AddToUserGames_Click"/>
     </StackPanel>
+    </ScrollViewer>
 </Window>
