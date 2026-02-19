@@ -84,9 +84,18 @@ namespace WpfApp1
                         : null
                 };
 
-                foreach (var g in save.User.Games)
+                foreach (GameData g in save.User.Games)
                 {
-                    User.Games.Add(FromGameData(g));
+                    var existingGame = AllGames.FirstOrDefault(x => x.Name == g.Name);
+                    if (existingGame != null)
+                    {
+                        User.Games.Add(existingGame);
+                    }
+                }
+
+                foreach (var g in User.Games)
+                {
+                    g.PropertyChanged += Game_PropertyChanged;
                 }
             }
             else
@@ -106,83 +115,81 @@ namespace WpfApp1
                 User.Description = "There are no description yet... However it can change when you want. Test Test Test Test Test Test Test Test Test Test Test Test Test Test";
                 Testcontent(AllGames);
             }
-                foreach (var game in User.Games)
+            foreach (var game in User.Games)
+            {
+                game.RemoveCommand = new RelayCommand(obj =>
                 {
-                    game.RemoveCommand = new RelayCommand(obj =>
-                    {
-                        User.Games.Remove(game);
-                    });
+                    User.Games.Remove(game);
+                });
+            }
+            GamesGroupedView = new ListCollectionView(User.Games);
+
+            GamesGroupedView.GroupDescriptions.Add(
+                new PropertyGroupDescription(nameof(Game.State))
+            );
+
+            GamesGroupedView.SortDescriptions.Add(
+                new SortDescription(nameof(Game.State), ListSortDirection.Ascending)
+            );
+
+            FilteredGames = new ObservableCollection<Game>(AllGames);
+            OpenGameCommand = new RelayCommand(game =>
+            {
+                if (game is Game g)
+                {
+                    var window = new GameDetailsWindowList(g, User.Games, User);
+                    window.Show();
                 }
-                GamesGroupedView = new ListCollectionView(User.Games);
+            });
+            EditUserCommand = new RelayCommand(obj =>
+            {
+                var window = new EditUserWindow(User);
+                window.ShowDialog(); // Modal
+                                        // Les modifications sont déjà appliquées directement via bindings
+            });
+            AddGameCommand = new RelayCommand(obj =>
+            {
+                var window = new AddGameWindow();
 
-                GamesGroupedView.GroupDescriptions.Add(
-                    new PropertyGroupDescription(nameof(Game.State))
-                );
-
-                GamesGroupedView.SortDescriptions.Add(
-                    new SortDescription(nameof(Game.State), ListSortDirection.Ascending)
-                );
-
-
-
-                FilteredGames = new ObservableCollection<Game>(AllGames);
-                OpenGameCommand = new RelayCommand(game =>
+                if (window.ShowDialog() == true)
                 {
-                    if (game is Game g)
+                    Game newGame = window.NewGame;
+
+                    // Sécurisation
+                    if (newGame.genre == null)
+                        newGame.genre = new List<string>();
+                    if (newGame.device == null)
+                        newGame.device = new List<string>();
+                    if (newGame.tags == null)
+                        newGame.tags = new List<string>();
+                    if (newGame.release == null)
+                        newGame.release = new List<string>();
+
+                    if (newGame.Illustration == null)
+                        newGame.Illustration = new BitmapImage(
+                            new Uri("Images/GameTest.png", UriKind.Relative));
+
+                    newGame.State = GameState.Playing;
+                    newGame.Score = newGame.Score;
+                    newGame.Time = newGame.Time;
+
+                    AllGames.Add(newGame);
+                    Filter();
+                }
+            });
+            User.Games.CollectionChanged += (s, e) =>
+            {
+                if (e.NewItems != null)
+                {
+                    foreach (Game g in e.NewItems)
                     {
-                        var window = new GameDetailsWindowList(g, User.Games, User);
-                        window.Show();
+                        g.PropertyChanged += Game_PropertyChanged;
                     }
-                });
-                EditUserCommand = new RelayCommand(obj =>
-                {
-                    var window = new EditUserWindow(User);
-                    window.ShowDialog(); // Modal
-                                         // Les modifications sont déjà appliquées directement via bindings
-                });
-                AddGameCommand = new RelayCommand(obj =>
-                {
-                    var window = new AddGameWindow();
-
-                    if (window.ShowDialog() == true)
-                    {
-                        Game newGame = window.NewGame;
-
-                        // Sécurisation
-                        if (newGame.genre == null)
-                            newGame.genre = new List<string>();
-                        if (newGame.device == null)
-                            newGame.device = new List<string>();
-                        if (newGame.tags == null)
-                            newGame.tags = new List<string>();
-                        if (newGame.release == null)
-                            newGame.release = new List<string>();
-
-                        if (newGame.Illustration == null)
-                            newGame.Illustration = new BitmapImage(
-                                new Uri("Images/GameTest.png", UriKind.Relative));
-
-                        newGame.State = GameState.Playing;
-                        newGame.Score = newGame.Score;
-                        newGame.Time = newGame.Time;
-
-                        AllGames.Add(newGame);
-                        Filter();
-                    }
-                });
-                User.Games.CollectionChanged += (s, e) =>
-                {
-                    if (e.NewItems != null)
-                    {
-                        foreach (Game g in e.NewItems)
-                        {
-                            g.PropertyChanged += Game_PropertyChanged;
-                        }
-                    }
-                };
+                }
+            };
                 
-            
         }
+
         private Game FromGameData(GameData g)
         {
             return new Game

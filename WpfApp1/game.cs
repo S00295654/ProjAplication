@@ -11,7 +11,7 @@ using System.Windows.Media.Imaging;
 
 namespace WpfApp1
 {
-    public class Game
+    public class Game : INotifyPropertyChanged
     {
         public ICommand RemoveCommand { get; set; }
         public string Name { get; set; }
