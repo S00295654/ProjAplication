@@ -217,6 +217,12 @@
   <ItemGroup>
     <Resource Include="Images\Overwatch.jpg" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Player1.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Images\Save\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\MaterialDesignThemes.5.3.0\build\MaterialDesignThemes.targets" Condition="Exists('..\packages\MaterialDesignThemes.5.3.0\build\MaterialDesignThemes.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

@@ -1,20 +1,31 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
 
 namespace WpfApp1
 {
-    public class User
+    public class User : INotifyPropertyChanged
     {
         public ObservableCollection<Game> Games { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
 
-        public BitmapImage ProfileImage { get; set; }
+        private BitmapImage profileImage;
+        public BitmapImage ProfileImage
+        {
+            get => profileImage;
+            set
+            {
+                profileImage = value;
+                OnPropertyChanged();
+            }
+        }
         public User(string name) 
         {
             Name = name;
@@ -52,5 +63,9 @@ namespace WpfApp1
                 return $"You have {day} day of gamming and {hour} of gamming";
             return $"You have {hour} of gamming in total";
         }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected void OnPropertyChanged([CallerMemberName] string propName = null)
+            => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
     }
 }

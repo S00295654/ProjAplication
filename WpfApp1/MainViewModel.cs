@@ -40,7 +40,16 @@ namespace WpfApp1
         public ObservableCollection<Game> AllGames { get; set; }
         public ObservableCollection<Game> FilteredGames { get; set; }
         public ICollectionView GamesGroupedView { get; }
-        public User User { get; set; }
+        private User user;
+        public User User
+        {
+            get => user;
+            set
+            {
+                user = value;
+                OnPropertyChanged();
+            }
+        }
 
         private string searchText;
         public string SearchText
@@ -69,7 +78,7 @@ namespace WpfApp1
         public MainViewModel()
         {
             var save = SaveManager.Load();
-
+            
             if (save != null)
             {
                 AllGames = new ObservableCollection<Game>(
@@ -117,7 +126,7 @@ namespace WpfApp1
             }
             foreach (var game in User.Games)
             {
-                game.RemoveCommand = new RelayCommand(obj =>
+                game.RemoveCommand = new RelayCommand(obj => 
                 {
                     User.Games.Remove(game);
                 });

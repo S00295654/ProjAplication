@@ -21,13 +21,10 @@ namespace WpfApp1
     /// </summary>
     public partial class MainWindow : Window
     {
-        public static Image reloadImage { get; private set; }
         public MainWindow()
         {
             InitializeComponent();
-            DataContext = new MainViewModel();
-            reloadImage = imagedeprofil;
-            
+            DataContext = new MainViewModel();            
         }
         protected override void OnClosed(EventArgs e)
         {

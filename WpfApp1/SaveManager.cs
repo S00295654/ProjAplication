@@ -32,6 +32,12 @@ namespace WpfApp1
                 AllGames = allGames.Select(g => ToGameData(g)).ToList()
             };
 
+            if (string.IsNullOrEmpty(saveFile.User.ProfileImagePath) ||
+                    !saveFile.User.ProfileImagePath.StartsWith("Images"))
+            {
+                saveFile.User.ProfileImagePath = "Images/Player1.jpg";
+            }
+
             var options = new JsonSerializerOptions { WriteIndented = true, PropertyNameCaseInsensitive = true };
             string json = JsonSerializer.Serialize(saveFile, options);
 
@@ -50,7 +56,7 @@ namespace WpfApp1
 
         private static GameData ToGameData(Game g)
         {
-            return new GameData
+            GameData res = new GameData()
             {
                 Name = g.Name,
                 tags = g.tags,
@@ -62,6 +68,13 @@ namespace WpfApp1
                 Score = g.Score,
                 State = g.State
             };
+            if (string.IsNullOrEmpty(res.ImagePath) ||
+                    !res.ImagePath.StartsWith("Images"))
+            {
+                res.ImagePath = "Images/GameTest.png";
+            }
+            
+            return res;
         }
         public class SaveFileModel
         {

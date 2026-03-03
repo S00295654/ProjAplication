@@ -16,7 +16,7 @@
         <!-- Image -->
         <StackPanel Orientation="Horizontal" Margin="0,10,0,10">
             <Image Source="{Binding ProfileImage}" Width="60" Height="60" Margin="0,0,10,0"/>
-            <Button Content="Upload Image" Width="100" Click="UploadImage_Click"/>
+            <Button Content="Upload Image" Width="124" Click="UploadImage_Click"/>
         </StackPanel>
 
         <!-- Boutons -->
