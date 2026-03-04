@@ -30,6 +30,7 @@ namespace WpfApp1
                 games.Add(new Game
                 {
                     Name = g.name,
+                    OnlineImageUrl = g.background_image,
                     release = new List<string> { g.released },
                     genre = g.genres?.Select(x => x.name).ToList() ?? new List<string>(),
                     device = new List<string>(),

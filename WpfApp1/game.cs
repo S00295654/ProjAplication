@@ -13,6 +13,7 @@ namespace WpfApp1
 {
     public class Game : INotifyPropertyChanged
     {
+        public string OnlineImageUrl { get; set; }
         public ICommand RemoveCommand { get; set; }
         public string Name { get; set; }
         public List<string> tags { get; set; }

@@ -137,7 +137,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="game.cs" />
-    <Compile Include="Library.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
