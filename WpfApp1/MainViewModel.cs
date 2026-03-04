@@ -10,6 +10,7 @@ using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
+using System.IO;
 
 namespace WpfApp1
 {
@@ -89,8 +90,8 @@ namespace WpfApp1
                 {
                     Description = save.User.Description,
                     ProfileImage = !string.IsNullOrEmpty(save.User.ProfileImagePath)
-                        ? new BitmapImage(new Uri(save.User.ProfileImagePath, UriKind.Relative))
-                        : null
+                    ? LoadImage(save.User.ProfileImagePath)
+                    : null
                 };
 
                 foreach (GameData g in save.User.Games)
@@ -215,6 +216,26 @@ namespace WpfApp1
                 Score = g.Score,
                 State = g.State
             };
+        }
+
+        private BitmapImage LoadImage(string relativePath)
+        {
+            string fullPath = Path.Combine(
+                AppDomain.CurrentDomain.BaseDirectory,
+                relativePath
+            );
+
+            if (!File.Exists(fullPath))
+                return null;
+
+            BitmapImage bitmap = new BitmapImage();
+            bitmap.BeginInit();
+            bitmap.CacheOption = BitmapCacheOption.OnLoad;
+            bitmap.UriSource = new Uri(fullPath, UriKind.Absolute);
+            bitmap.EndInit();
+            bitmap.Freeze();
+
+            return bitmap;
         }
 
 

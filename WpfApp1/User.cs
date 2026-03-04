@@ -13,8 +13,35 @@ namespace WpfApp1
     public class User : INotifyPropertyChanged
     {
         public ObservableCollection<Game> Games { get; set; }
-        public string Name { get; set; }
-        public string Description { get; set; }
+        private string name { get; set; }
+        public string Name
+        {
+            get => name;
+            set
+            {
+                name = value;
+                OnPropertyChanged();
+            }
+        }
+        private string description { get; set; }
+        public string Description
+        {
+            get => description;
+            set
+            {
+                description = value;
+                OnPropertyChanged();
+            }
+        }
+
+
+
+        public string Time {
+            get 
+            {
+                return TimeInDay();
+            }
+        }
 
         private BitmapImage profileImage;
         public BitmapImage ProfileImage
@@ -57,11 +84,11 @@ namespace WpfApp1
             hour = (int)t;
             if (day>1)
             {
-                return $"You have {day} days of gamming and {hour} of gamming";
+                return $"You have {day} days of gaming and {hour} of gaming";
             }
             if (day==1)
-                return $"You have {day} day of gamming and {hour} of gamming";
-            return $"You have {hour} of gamming in total";
+                return $"You have {day} days and {hour}h of gaming";
+            return $"You have {hour} of gaming in total";
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

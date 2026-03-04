@@ -37,32 +37,34 @@ namespace WpfApp1
             {
                 try
                 {
-                    // Dossier cible
-                    string saveFolder = IOPath.Combine(AppDomain.CurrentDomain.BaseDirectory, "Images", "Save");
+                    string saveFolder = IOPath.Combine(
+                        AppDomain.CurrentDomain.BaseDirectory,
+                        "Images",
+                        "Save"
+                    );
 
-                    // Crée le dossier si nécessaire
                     if (!Directory.Exists(saveFolder))
                         Directory.CreateDirectory(saveFolder);
 
-                    // Nouveau nom unique pour éviter les conflits
                     string extension = IOPath.GetExtension(ofd.FileName);
                     string newFileName = $"profile_{Guid.NewGuid()}{extension}";
                     string destinationPath = IOPath.Combine(saveFolder, newFileName);
 
-                    // Copie l'image
                     File.Copy(ofd.FileName, destinationPath, true);
 
-                    // Chemin relatif pour sauvegarde JSON
-                    string relativePath = IOPath.Combine("Images", "Save", newFileName);
+                    // 🔹 Charger avec chemin ABSOLU
+                    BitmapImage bitmap = new BitmapImage();
+                    bitmap.BeginInit();
+                    bitmap.CacheOption = BitmapCacheOption.OnLoad;
+                    bitmap.UriSource = new Uri(destinationPath, UriKind.Absolute);
+                    bitmap.EndInit();
+                    bitmap.Freeze(); // évite les problèmes de lock
 
-                    // Mise à jour du profil
-                    User.ProfileImage = new BitmapImage(
-                        new Uri(relativePath, UriKind.Relative)
-                    );
+                    User.ProfileImage = bitmap;
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Erreur lors de la copie de l'image : " + ex.Message);
+                    MessageBox.Show("Erreur copie de l'image : " + ex.Message);
                 }
             }
         }

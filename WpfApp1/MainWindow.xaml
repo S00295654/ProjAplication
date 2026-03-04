@@ -71,7 +71,28 @@
                     TextWrapping="Wrap"
                     FontSize="16"
                     Margin="44,276,445,0"
-                    TextAlignment="Center" Height="188" VerticalAlignment="Top"/>
+                    TextAlignment="Center" Height="137" VerticalAlignment="Top"/>
+
+                <Rectangle Margin="445,25,44,0"
+                   Stroke="Black"
+                   Height="439"
+                   VerticalAlignment="Top"/>
+
+                <!-- statistics -->
+                
+                <TextBlock
+                Text="{Binding User.Time}"
+                TextWrapping="Wrap"
+                FontSize="16"
+                Margin="446,102,44,0"
+                TextAlignment="Center" Height="51" VerticalAlignment="Top"/>
+
+                
+                <TextBlock
+                Text="statistics"
+                TextWrapping="Wrap"
+                FontSize="22" Margin="446,41,43,0"
+                TextAlignment="Center" Height="40" VerticalAlignment="Top"/>
 
                 <Button Content="Edit Profile"
                         Width="120"

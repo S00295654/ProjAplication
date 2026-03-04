@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using System.Collections.ObjectModel;
 using System.Text.Json;
-using System.IO;
-using System.Diagnostics;
+using System.Threading.Tasks;
+using System.Windows.Media.Imaging;
 
 
 namespace WpfApp1
@@ -26,7 +27,7 @@ namespace WpfApp1
                 {
                     Name = user.Name,
                     Description = user.Description,
-                    ProfileImagePath = user.ProfileImage?.UriSource?.ToString(),
+                    ProfileImagePath = GetRelativeImagePath(user.ProfileImage),
                     Games = user.Games.Select(g => ToGameData(g)).ToList()
                 },
                 AllGames = allGames.Select(g => ToGameData(g)).ToList()
@@ -76,6 +77,22 @@ namespace WpfApp1
             
             return res;
         }
+
+        private static string GetRelativeImagePath(BitmapImage image)
+        {
+            if (image?.UriSource == null)
+                return null;
+
+            string fullPath = image.UriSource.LocalPath;
+
+            string basePath = AppDomain.CurrentDomain.BaseDirectory;
+
+            if (fullPath.StartsWith(basePath))
+                return fullPath.Substring(basePath.Length);
+
+            return null;
+        }
+
         public class SaveFileModel
         {
             public UserData User { get; set; }
