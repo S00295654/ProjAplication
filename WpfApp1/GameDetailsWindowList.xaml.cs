@@ -24,8 +24,9 @@ namespace WpfApp1
         private Game _game;
         private ObservableCollection<Game> _games;
         private User User;
+        private ObservableCollection<Game> AllGames;
 
-        public GameDetailsWindowList(Game game, ObservableCollection<Game> games, User user)
+        public GameDetailsWindowList(Game game, ObservableCollection<Game> games, User user, ObservableCollection<Game> allGames)
         {
 
             InitializeComponent();
@@ -36,6 +37,7 @@ namespace WpfApp1
             _games = games;
             _game= game;
             User = user;
+            AllGames = allGames;
         }
 
         private void ConfirmButton_Click(object sender, RoutedEventArgs e)
@@ -54,7 +56,8 @@ namespace WpfApp1
         }
         private void InfoButton_Click(object sender, RoutedEventArgs e)
         {
-            var window = new GameDetailsWindow(_game, User);
+            
+            var window = new GameDetailsWindow(_game, User, AllGames);
             window.Show();
         }
     }

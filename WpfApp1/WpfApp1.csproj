@@ -101,6 +101,7 @@
     <Compile Include="EditUserWindow.xaml.cs">
       <DependentUpon>EditUserWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="GameApiService.cs" />
     <Compile Include="GameDetailsWindow.xaml.cs">
       <DependentUpon>GameDetailsWindow.xaml</DependentUpon>
     </Compile>
@@ -108,6 +109,7 @@
       <DependentUpon>GameDetailsWindowList.xaml</DependentUpon>
     </Compile>
     <Compile Include="MainViewModel.cs" />
+    <Compile Include="RawgModels.cs" />
     <Compile Include="SaveManager.cs" />
     <Compile Include="User.cs" />
     <Page Include="AddGameWindow.xaml">

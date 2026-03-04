@@ -11,11 +11,13 @@ using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using System.IO;
+using System.Text.Json;
 
 namespace WpfApp1
 {
     public class MainViewModel : INotifyPropertyChanged
     {
+        private readonly GameApiService _apiService = new GameApiService();
         public ICommand OpenGameCommand { get; }
         private Game selectedGame;
         public ICollectionView PlannedGamesView { get; }
@@ -33,8 +35,7 @@ namespace WpfApp1
         {
             if (SelectedGame == null)
                 return;
-
-            var window = new GameDetailsWindow(SelectedGame, User);
+            var window = new GameDetailsWindow(SelectedGame, User, AllGames);
             window.Show();
         }
 
@@ -110,8 +111,8 @@ namespace WpfApp1
             }
             else
             {
-                AllGames = new ObservableCollection<Game>
-                {
+                AllGames = new ObservableCollection<Game> { };
+                /*{
                     new Game { Name = "Elden Ring" },
                     new Game { Name = "Minecraft", Illustration=new BitmapImage(new Uri("Images/Minecraft.jpg", UriKind.Relative)) },
                     new Game { Name = "Hades", Illustration=new BitmapImage(new Uri("Images/Hades.jpg", UriKind.Relative)) },
@@ -120,10 +121,10 @@ namespace WpfApp1
                     new Game { Name = "Overwatch", Illustration=new BitmapImage(new Uri("Images/overwatch.jpg", UriKind.Relative)) },
                     new Game { Name = "CS2",  Illustration=new BitmapImage(new Uri("Images/CS2.png", UriKind.Relative)) },
                     new Game { Name = "Tetris" }
-                };
+                };*/
                 User = new User("New User");
                 User.Description = "There are no description yet... However it can change when you want. Test Test Test Test Test Test Test Test Test Test Test Test Test Test";
-                Testcontent(AllGames);
+                //Testcontent(AllGames);
             }
             foreach (var game in User.Games)
             {
@@ -147,7 +148,11 @@ namespace WpfApp1
             {
                 if (game is Game g)
                 {
-                    var window = new GameDetailsWindowList(g, User.Games, User);
+                    if (!AllGames.Contains(g))
+                    { 
+                        AllGames.Add(g);
+                    }
+                    var window = new GameDetailsWindowList(g, User.Games, User, AllGames);
                     window.Show();
                 }
             });
@@ -272,16 +277,34 @@ namespace WpfApp1
 
         }
 
-        private void Filter()
+        private async void Filter()
         {
             FilteredGames.Clear();
 
+            if (string.IsNullOrWhiteSpace(SearchText))
+            {
+                foreach (var g in AllGames)
+                    FilteredGames.Add(g);
+                return;
+            }
+
+            // 1️⃣ Recherche locale
             foreach (var g in AllGames)
             {
-                if (string.IsNullOrEmpty(SearchText) ||
-                    g.Name.IndexOf(SearchText, StringComparison.OrdinalIgnoreCase) >= 0)
+                if (g.Name.IndexOf(SearchText, StringComparison.OrdinalIgnoreCase) >= 0)
                 {
                     FilteredGames.Add(g);
+                }
+            }
+
+            // 2️⃣ Recherche API
+            var apiGames = await _apiService.SearchGames(SearchText);
+
+            foreach (var game in apiGames)
+            {
+                if (!AllGames.Any(x => x.Name == game.Name))
+                {
+                    FilteredGames.Add(game);
                 }
             }
         }

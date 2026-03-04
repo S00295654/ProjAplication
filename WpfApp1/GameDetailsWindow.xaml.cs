@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,20 +22,26 @@ namespace WpfApp1
     {
         private User CurrentUser;
         private Game CurrentGame;
+        private ObservableCollection<Game> Allgames;
 
-        public GameDetailsWindow(Game game,User user)
+        public GameDetailsWindow(Game game,User user, ObservableCollection<Game> allgames)
         {
             InitializeComponent();
             DataContext = game;
 
             CurrentUser = user;
             CurrentGame = game;
+            Allgames = allgames;
         }
         private void AddToUserGames_Click(object sender, RoutedEventArgs e)
         {
             if (!CurrentUser.Games.Contains(CurrentGame))
             {
                 CurrentUser.Games.Add(CurrentGame);
+                if (!Allgames.Contains(CurrentGame))
+                {
+                    Allgames.Add(CurrentGame);
+                }
                 MessageBox.Show($"{CurrentGame.Name} as been added to your list !");
             }
             else
