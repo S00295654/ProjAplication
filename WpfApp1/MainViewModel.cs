@@ -2,16 +2,18 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Text.Json;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
-using System.IO;
-using System.Text.Json;
+using System.Windows.Threading;
 
 namespace WpfApp1
 {
@@ -21,6 +23,9 @@ namespace WpfApp1
         public ICommand OpenGameCommand { get; }
         private Game selectedGame;
         public ICollectionView PlannedGamesView { get; }
+        private CancellationTokenSource _searchCancellation;
+        private DispatcherTimer _searchTimer;
+        private string _lastApiSearch = "";
         public Game SelectedGame
         {
             get => selectedGame;
@@ -61,7 +66,9 @@ namespace WpfApp1
             {
                 searchText = value;
                 OnPropertyChanged();
-                Filter();
+
+                _searchTimer.Stop();
+                _searchTimer.Start();
             }
         }
         public ICommand EditUserCommand { get; set; }
@@ -71,6 +78,17 @@ namespace WpfApp1
             if (e.PropertyName == nameof(Game.State))
             {
                 GamesGroupedView.Refresh();
+            }
+        }
+
+        private bool isSearching;
+        public bool IsSearching
+        {
+            get => isSearching;
+            set
+            {
+                isSearching = value;
+                OnPropertyChanged();
             }
         }
 
@@ -189,7 +207,7 @@ namespace WpfApp1
                     newGame.Time = newGame.Time;
 
                     AllGames.Add(newGame);
-                    Filter();
+                    _ = FilterAsync();
                 }
             });
             User.Games.CollectionChanged += (s, e) =>
@@ -202,7 +220,15 @@ namespace WpfApp1
                     }
                 }
             };
-                
+
+            _searchTimer = new DispatcherTimer();
+            _searchTimer.Interval = TimeSpan.FromMilliseconds(500);
+            _searchTimer.Tick += async (s, e) =>
+            {
+                _searchTimer.Stop();
+                await FilterAsync();
+            };
+
         }
 
         private Game FromGameData(GameData g)
@@ -277,8 +303,12 @@ namespace WpfApp1
 
         }
 
-        private async void Filter()
+        private async Task FilterAsync()
         {
+            _searchCancellation?.Cancel();
+            _searchCancellation = new CancellationTokenSource();
+            var token = _searchCancellation.Token;
+
             FilteredGames.Clear();
 
             if (string.IsNullOrWhiteSpace(SearchText))
@@ -288,30 +318,58 @@ namespace WpfApp1
                 return;
             }
 
-            // 1️⃣ Recherche locale
             foreach (var g in AllGames)
             {
-                if (g.Name.IndexOf(SearchText, StringComparison.OrdinalIgnoreCase) >= 0)
+                if (IsMatch(g.Name, SearchText))
                 {
                     FilteredGames.Add(g);
                 }
             }
 
-            // 2️⃣ Recherche API
+            //API seulement si +3 lettres et si la recherche est nouvelle
+            if (SearchText.Length < 3 || SearchText == _lastApiSearch)
+                return;
+
+            _lastApiSearch = SearchText;
+
+            IsSearching = true;
             var apiGames = await _apiService.SearchGames(SearchText);
+            IsSearching = false;
+
+            if (token.IsCancellationRequested)
+                return;
 
             foreach (var game in apiGames)
             {
-                if (!AllGames.Any(x => x.Name == game.Name))
-                {
+                bool alreadyExists =
+                    AllGames.Any(x => x.Name.Equals(game.Name, StringComparison.OrdinalIgnoreCase)) ||
+                    FilteredGames.Any(x => x.Name.Equals(game.Name, StringComparison.OrdinalIgnoreCase));
+
+                if (!alreadyExists)
                     FilteredGames.Add(game);
-                }
             }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
         void OnPropertyChanged([CallerMemberName] string n = null)
             => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(n));
+
+        private bool IsMatch(string source, string search)
+        {
+            if (string.IsNullOrWhiteSpace(source) || string.IsNullOrWhiteSpace(search))
+                return false;
+
+            source = source.ToLower();
+            search = search.ToLower();
+
+            // correspondance normale
+            if (source.Contains(search))
+                return true;
+
+            // correspondance par mots
+            var words = source.Split(' ');
+            return words.Any(w => w.StartsWith(search));
+        }
 
     }
     public class RelayCommand : ICommand

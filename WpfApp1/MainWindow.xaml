@@ -12,6 +12,10 @@
         TextElement.FontSize="14"
         FontFamily="{DynamicResource MaterialDesignFont}"
         Title="MainWindow" Height="694" Width="800">
+    <!-- ⚡ Ajoute ceci -->
+    <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
+    </Window.Resources>
     <TabControl Background="White">
         <TabItem Header="" BorderBrush="#FF00BFA0" Background="White">
             <Grid Background="White">
@@ -79,7 +83,7 @@
                    VerticalAlignment="Top"/>
 
                 <!-- statistics -->
-                
+
                 <TextBlock
                 Text="{Binding User.Time}"
                 TextWrapping="Wrap"
@@ -87,7 +91,7 @@
                 Margin="446,102,44,0"
                 TextAlignment="Center" Height="51" VerticalAlignment="Top"/>
 
-                
+
                 <TextBlock
                 Text="statistics"
                 TextWrapping="Wrap"
@@ -249,6 +253,12 @@
             materialDesign:HintAssist.Hint="Seek a game ?"
             Style="{StaticResource MaterialDesignOutlinedTextBox}"
             Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}" />
+                <!-- LOADING -->
+                <ProgressBar
+                Grid.Row="0"
+                Margin="20,68,20,0"
+                IsIndeterminate="True"
+                Visibility="{Binding IsSearching, Converter={StaticResource BoolToVisibilityConverter}}"/>
 
                 <!-- LISTE DES JEUX -->
                 <ListView
@@ -260,6 +270,7 @@
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal" Margin="5">
+
 
                                 <!-- Image du jeu -->
                                 <Image Source="{Binding Illustration}"
