@@ -64,7 +64,7 @@ namespace WpfApp1
                 genre = g.genre,
                 device = g.device,
                 release = g.release,
-                ImagePath = g.Illustration?.UriSource?.ToString(),
+                ImagePath = GetRelativeImagePath(g.Illustration),
                 Time = g.Time,
                 Score = g.Score,
                 State = g.State
@@ -83,8 +83,18 @@ namespace WpfApp1
             if (image?.UriSource == null)
                 return null;
 
-            string fullPath = image.UriSource.LocalPath;
+            Uri uri = image.UriSource;
 
+            // Si c'est une URL web
+            if (uri.IsAbsoluteUri && uri.Scheme.StartsWith("http"))
+                return null;
+
+            // Si c'est déjà un chemin relatif (Images/...)
+            if (!uri.IsAbsoluteUri)
+                return uri.ToString();
+
+            // Si c'est un chemin absolu local
+            string fullPath = uri.LocalPath;
             string basePath = AppDomain.CurrentDomain.BaseDirectory;
 
             if (fullPath.StartsWith(basePath))
@@ -98,6 +108,7 @@ namespace WpfApp1
             public UserData User { get; set; }
             public List<GameData> AllGames { get; set; }
         }
+     
 
     }
 

@@ -214,21 +214,21 @@ namespace WpfApp1
                 genre = g.genre ?? new List<string>(),
                 device = g.device ?? new List<string>(),
                 release = g.release ?? new List<string>(),
-                Illustration = !string.IsNullOrEmpty(g.ImagePath)
-                    ? new BitmapImage(new Uri(g.ImagePath, UriKind.Relative))
-                    : null,
+                Illustration = LoadImage(g.ImagePath),
                 Time = g.Time,
                 Score = g.Score,
                 State = g.State
             };
         }
 
-        private BitmapImage LoadImage(string relativePath)
+        private BitmapImage LoadImage(string path)
         {
+            if (string.IsNullOrEmpty(path))
+                return null;
+
             string fullPath = Path.Combine(
                 AppDomain.CurrentDomain.BaseDirectory,
-                relativePath
-            );
+                path);
 
             if (!File.Exists(fullPath))
                 return null;

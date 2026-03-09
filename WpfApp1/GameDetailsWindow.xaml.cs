@@ -49,10 +49,20 @@ namespace WpfApp1
                         CurrentGame.OnlineImageUrl,
                         CurrentGame.Name);
 
-                    CurrentGame.Illustration =
-                        new BitmapImage(new Uri(localPath, UriKind.Relative));
+                    string fullPath = Path.Combine(
+                        AppDomain.CurrentDomain.BaseDirectory,
+                        localPath);
 
-                    CurrentGame.OnlineImageUrl = null; // plus besoin
+                    BitmapImage bitmap = new BitmapImage();
+                    bitmap.BeginInit();
+                    bitmap.CacheOption = BitmapCacheOption.OnLoad;
+                    bitmap.UriSource = new Uri(fullPath, UriKind.Absolute);
+                    bitmap.EndInit();
+                    bitmap.Freeze();
+
+                    CurrentGame.Illustration = bitmap;
+
+                    CurrentGame.OnlineImageUrl = null;
                 }
 
                 CurrentUser.Games.Add(CurrentGame);
