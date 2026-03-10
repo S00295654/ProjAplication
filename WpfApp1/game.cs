@@ -46,6 +46,13 @@ namespace WpfApp1
             }
         }
 
+        private bool favorite=false;
+        public bool Favorite
+        {
+            get => favorite;
+            set { favorite = value; OnPropertyChanged(); }
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
         void OnPropertyChanged([CallerMemberName] string name = null)
             => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));

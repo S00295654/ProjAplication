@@ -17,93 +17,126 @@
         <BooleanToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
     </Window.Resources>
     <TabControl Background="White">
-        <TabItem Header="" BorderBrush="#FF00BFA0" Background="White">
-            <Grid Background="White">
-                <Grid Height="30" VerticalAlignment="Top" Margin="0,-40,0,0">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
+        <TabItem Header="">
+            <Grid Background="#1F2A44">
 
-                    <TextBlock Grid.Column="0"
-                       Text="Profile"
-                       Foreground="#FF7952C0"
-                       FontWeight="SemiBold"
-                       HorizontalAlignment="Center"
-                       VerticalAlignment="Center" FontSize="15"/>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="320"/>
+                    <ColumnDefinition Width="20"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
 
-                    <TextBlock Grid.Column="1"
-                       Text="Home"
-                       Foreground="Gray"
-                       FontWeight="SemiBold"
-                       HorizontalAlignment="Center"
-                       VerticalAlignment="Center"/>
+                <!-- PROFILE CARD -->
+                <Border Grid.Column="0"
+                Background="#3A3F7A"
+                CornerRadius="10"
+                Padding="20"
+                BorderBrush="#5A5FC0"
+                BorderThickness="1">
 
-                    <TextBlock Grid.Column="2"
-                   Text="Game List"
-                   Foreground="Gray"
-                   FontWeight="SemiBold"
-                   HorizontalAlignment="Center"
-                   VerticalAlignment="Center"/>
-                </Grid>
+                    <StackPanel HorizontalAlignment="Center">
 
+                        <!-- Name -->
+                        <TextBlock Text="{Binding User.Name}"
+                           FontSize="22"
+                           FontWeight="Bold"
+                           TextAlignment="Center"
+                           Margin="0,0,0,10"
+                           Foreground="White"/>
 
-                <Rectangle Margin="44,25,445,0"
-                   Stroke="Black"
-                   Height="439"
-                   VerticalAlignment="Top"/>
+                        <!-- Profile Image -->
+                        <Border Width="150"
+                        Height="150"
+                        CornerRadius="75"
+                        ClipToBounds="True"
+                        Margin="0,10">
+                            <Image Source="{Binding User.ProfileImage}"
+                           Stretch="UniformToFill"/>
+                        </Border>
 
-                <!-- Image of profil -->
-                <Image x:Name="imagedeprofil"
-                Source="{Binding User.ProfileImage}"
-                Height="150"
-                Width="150"
-                VerticalAlignment="Top"
-                Margin="124,102,526,0"/>
+                        <!-- Description -->
+                        <TextBlock Text="{Binding User.Description}"
+                           TextWrapping="Wrap"
+                           TextAlignment="Center"
+                           Margin="0,10"
+                           FontSize="14"
+                           Foreground="White"/>
 
-                <TextBox
-                    x:Name="UserNameTextBox"
-                    Text="{Binding User.Name}"
-                    IsReadOnly="True"
-                    FontSize="22" Margin="44,25,445,0"
-                    TextAlignment="Center" Height="72" VerticalAlignment="Top"/>
-
-                <!-- Decrition -->
-                <TextBlock
-                    Text="{Binding User.Description}"
-                    TextWrapping="Wrap"
-                    FontSize="16"
-                    Margin="44,276,445,0"
-                    TextAlignment="Center" Height="137" VerticalAlignment="Top"/>
-
-                <Rectangle Margin="445,25,44,0"
-                   Stroke="Black"
-                   Height="439"
-                   VerticalAlignment="Top"/>
-
-                <!-- statistics -->
-
-                <TextBlock
-                Text="{Binding User.Time}"
-                TextWrapping="Wrap"
-                FontSize="16"
-                Margin="446,102,44,0"
-                TextAlignment="Center" Height="51" VerticalAlignment="Top"/>
-
-
-                <TextBlock
-                Text="statistics"
-                TextWrapping="Wrap"
-                FontSize="22" Margin="446,41,43,0"
-                TextAlignment="Center" Height="40" VerticalAlignment="Top"/>
-
-                <Button Content="Edit Profile"
+                        <Button Content="Edit Profile"
                         Width="120"
                         Height="30"
-                        HorizontalAlignment="Center"
-                        Margin="0,380,0,0"
+                        Margin="0,20,0,0"
+                        Background="#5A5FC0"
+                        Foreground="White"
+                        BorderThickness="0"
                         Command="{Binding EditUserCommand}"/>
+
+                    </StackPanel>
+                </Border>
+
+                <!-- RIGHT SIDE -->
+                <Border Grid.Column="2"
+                Background="#3A3F7A"
+                CornerRadius="10"
+                Padding="20"
+                BorderBrush="#5A5FC0"
+                BorderThickness="1">
+
+                    <StackPanel>
+
+                        <!-- Title -->
+                        <TextBlock Text="Statistics"
+                           FontSize="22"
+                           FontWeight="Bold"
+                           Margin="0,0,0,20"
+                           Foreground="White"/>
+
+                        <!-- Time played -->
+                        <TextBlock Text="{Binding User.Time}"
+                           FontSize="16"
+                           Margin="0,0,0,20"
+                           Foreground="White"/>
+
+                        <!-- Most played -->
+                        <TextBlock Text="Most played game"
+                           FontSize="16"
+                           FontWeight="SemiBold"
+                           Margin="0,10"
+                           Foreground="White"/>
+
+                        <Button Width="200"
+                        Height="160"
+                        Background="Transparent"
+                        BorderThickness="0"
+                        Command="{Binding DataContext.OpenGameCommand,
+                                  RelativeSource={RelativeSource AncestorType=Window}}"
+                        CommandParameter="{Binding User.MostPlayed}">
+
+                            <StackPanel>
+
+                                <Border Width="200"
+                                Height="100"
+                                CornerRadius="6"
+                                ClipToBounds="True">
+
+                                    <Image Source="{Binding User.MostPlayed.Illustration}"
+                                   Stretch="UniformToFill"/>
+                                </Border>
+
+                                <TextBlock Text="{Binding User.MostPlayed.Name}"
+                                   FontSize="12"
+                                   TextAlignment="Center"
+                                   Margin="0,5,0,0"
+                                   Foreground="White"/>
+
+                            </StackPanel>
+
+                        </Button>
+
+                    </StackPanel>
+
+                </Border>
+
             </Grid>
         </TabItem>
 
@@ -183,8 +216,16 @@
                                         <Grid Width="100"
                                       Height="100"
                                       ClipToBounds="True">
-                                            <Image Source="{Binding Illustration}"
-                                           Stretch="UniformToFill"/>
+                                            <Border Width="100"
+                                                Height="100"
+                                                CornerRadius="6"
+                                                ClipToBounds="True"
+                                                Margin="0,0,10,0">
+                                                <Image Source="{Binding Illustration}"
+                                                    Stretch="UniformToFill"
+                                                    HorizontalAlignment="Center"
+                                                    VerticalAlignment="Center"/>
+                                            </Border>
                                         </Grid>
 
                                         <TextBlock Text="{Binding Name}"
@@ -273,11 +314,16 @@
 
 
                                 <!-- Image du jeu -->
-                                <Image Source="{Binding Illustration}"
-                                   Width="60"
-                                   Height="60"
+                                <Border Width="60"
+                                    Height="60"
+                                    CornerRadius="6"
+                                    ClipToBounds="True"
+                                    Margin="0,0,10,0">
+                                    <Image Source="{Binding Illustration}"
                                    Stretch="UniformToFill"
-                                   Margin="0,0,10,0"/>
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Center"/>
+                                </Border>
 
                                 <!-- Nom du jeu -->
                                 <TextBlock Text="{Binding Name}"

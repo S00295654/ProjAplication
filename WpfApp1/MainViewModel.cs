@@ -400,6 +400,7 @@ namespace WpfApp1
         Playing = 0,
         Planned = 1,
         Finished = 2,
-        Stop = 3
+        Stop = 3,
+        Dropped = 4
     }
 }

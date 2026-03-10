@@ -38,7 +38,7 @@ namespace WpfApp1
         }
         private async void AddToUserGames_Click(object sender, RoutedEventArgs e)
         {
-            if (!Allgames.Contains(CurrentGame))
+            if (!CurrentUser.Games.Contains(CurrentGame))
             {
                 Allgames.Add(CurrentGame);
 

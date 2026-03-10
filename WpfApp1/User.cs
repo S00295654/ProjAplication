@@ -42,6 +42,13 @@ namespace WpfApp1
                 return TimeInDay();
             }
         }
+        public Game MostPlayed
+        {
+            get
+            {
+                return MostTime();
+            }
+        }
 
         private BitmapImage profileImage;
         public BitmapImage ProfileImage
@@ -89,6 +96,19 @@ namespace WpfApp1
             if (day==1)
                 return $"You have {day} days and {hour}h of gaming";
             return $"You have {hour} of gaming in total";
+        }
+        public Game MostTime()
+        {
+            if (Games.Count == 0) 
+                return null;
+
+            Game res = Games[0];
+            foreach (Game game in Games)
+            {
+                if (game.Time > res.Time)
+                    res = game;
+            }
+            return res;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
