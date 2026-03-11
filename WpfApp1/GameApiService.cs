@@ -33,7 +33,9 @@ namespace WpfApp1
                     OnlineImageUrl = g.background_image,
                     release = new List<string> { g.released },
                     genre = g.genres?.Select(x => x.name).ToList() ?? new List<string>(),
-                    device = new List<string>(),
+                    device = g.platforms?
+                        .Select(p => p.platform.name)
+                        .ToList() ?? new List<string>(),
                     tags = new List<string>(),
                     Illustration = !string.IsNullOrEmpty(g.background_image)
                         ? new BitmapImage(new Uri(g.background_image))

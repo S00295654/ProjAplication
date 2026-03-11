@@ -1,7 +1,8 @@
 ﻿<Window x:Class="WpfApp1.GameDetailsWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Game details"
+        Title="{Binding Name}"
+        Icon="Images/logo.png"
         Height="540"
         Width="493"
         Background="#1E2A47">
@@ -66,7 +67,7 @@
             </ItemsControl>
 
             <!-- Device -->
-            <TextBlock Text="Devices"
+            <TextBlock Text="Platforms"
                        Foreground="#A8B3CF"
                        FontWeight="SemiBold"
                        Margin="0,15,0,5"/>

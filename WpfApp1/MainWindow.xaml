@@ -11,7 +11,8 @@
         TextElement.Foreground="{DynamicResource MaterialDesign.Body}"
         TextElement.FontSize="14"
         FontFamily="{DynamicResource MaterialDesignFont}"
-        Title="MainWindow" Height="694" Width="800">
+        Icon="Images/logo.png"
+        Title="GameList" Height="700" Width="800">
     <!-- ⚡ Ajoute ceci -->
     <Window.Resources>
         <BooleanToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
@@ -25,6 +26,28 @@
                     <ColumnDefinition Width="20"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
+
+                <TextBlock
+                Text="Profile"
+                Foreground="#FF7952C0"
+                FontWeight="SemiBold"
+                FontSize="15"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top" Margin="113,-33,0,0"/>
+
+                <TextBlock Grid.Column="2"
+               Text="Home"
+               Foreground="Gray"
+               FontWeight="SemiBold"
+               HorizontalAlignment="Left"
+               VerticalAlignment="Top" Margin="44,-32,0,0"/>
+
+                <TextBlock Grid.Column="2"
+                Text="Game List"
+                Foreground="Gray"
+                FontWeight="SemiBold"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top" Margin="300,-32,0,0"/>
 
                 <!-- PROFILE CARD -->
                 <Border Grid.Column="0"
@@ -265,7 +288,7 @@
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
 
-                    <TextBlock Grid.Column="0"
+                    <TextBlock
                        Text="Profile"
                        Foreground="gray"
                        FontWeight="SemiBold"
@@ -334,7 +357,7 @@
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
-                <Button
+                <!--<Button
                 Content="Add Game"
                 Width="120"
                 Height="35"
@@ -342,7 +365,7 @@
                 HorizontalAlignment="Left"
                 VerticalAlignment="Center"
                 Command="{Binding AddGameCommand}"
-                Style="{StaticResource MaterialDesignRaisedButton}" />
+                Style="{StaticResource MaterialDesignRaisedButton}" /> -->
             </Grid>
         </TabItem>
     </TabControl>
