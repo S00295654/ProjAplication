@@ -21,41 +21,46 @@
         <TabItem Header="">
             <Grid Background="#1F2A44">
 
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="320"/>
-                    <ColumnDefinition Width="20"/>
-                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
 
-                <TextBlock
-                Text="Profile"
-                Foreground="#FF7952C0"
-                FontWeight="SemiBold"
-                FontSize="15"
-                HorizontalAlignment="Left"
-                VerticalAlignment="Top" Margin="113,-33,0,0"/>
+                <TextBlock Grid.Row="0"
+               Text="Profile"
+               Foreground="#FF7952C0"
+               FontWeight="SemiBold"
+               HorizontalAlignment="Center"
+               VerticalAlignment="Top" Margin="0,-33,0,0"/>
 
-                <TextBlock Grid.Column="2"
+                <TextBlock Grid.Row="0" Grid.Column="1"
                Text="Home"
                Foreground="Gray"
                FontWeight="SemiBold"
-               HorizontalAlignment="Left"
-               VerticalAlignment="Top" Margin="44,-32,0,0"/>
+               HorizontalAlignment="Center"
+               VerticalAlignment="Top" Margin="0,-33,0,0"/>
 
-                <TextBlock Grid.Column="2"
-                Text="Game List"
-                Foreground="Gray"
-                FontWeight="SemiBold"
-                HorizontalAlignment="Left"
-                VerticalAlignment="Top" Margin="300,-32,0,0"/>
+                <TextBlock Grid.Row="0" Grid.Column="2"
+               Text="Game List"
+               Foreground="Gray"
+               FontWeight="SemiBold"
+               HorizontalAlignment="Center"
+               VerticalAlignment="Top"  Margin="0,-33,0,0"/>
 
                 <!-- PROFILE CARD -->
                 <Border Grid.Column="0"
                 Background="#3A3F7A"
-                CornerRadius="10"
+                CornerRadius="20"
+                Margin="10,10,10,10"
                 Padding="20"
                 BorderBrush="#5A5FC0"
-                BorderThickness="1">
+                BorderThickness="1" Grid.RowSpan="2">
 
                     <StackPanel HorizontalAlignment="Center">
 
@@ -98,12 +103,15 @@
                 </Border>
 
                 <!-- RIGHT SIDE -->
-                <Border Grid.Column="2"
+                <Border
+                Grid.Column="1"
+                Grid.ColumnSpan="2"
                 Background="#3A3F7A"
-                CornerRadius="10"
+                CornerRadius="20"
+                Margin="10,10,10,10"
                 Padding="20"
                 BorderBrush="#5A5FC0"
-                BorderThickness="1">
+                BorderThickness="1" Grid.RowSpan="2">
 
                     <StackPanel>
 

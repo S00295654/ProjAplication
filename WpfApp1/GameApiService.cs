@@ -36,7 +36,9 @@ namespace WpfApp1
                     device = g.platforms?
                         .Select(p => p.platform.name)
                         .ToList() ?? new List<string>(),
-                    tags = new List<string>(),
+                    tags = g.tags?
+                        .Select(t => t.name)
+                        .ToList() ?? new List<string>(),
                     Illustration = !string.IsNullOrEmpty(g.background_image)
                         ? new BitmapImage(new Uri(g.background_image))
                         : null,

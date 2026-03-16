@@ -17,6 +17,7 @@ namespace WpfApp1
         public string background_image { get; set; }
         public string released { get; set; }
         public List<RawgGenre> genres { get; set; }
+        public List<RawgTags> tags { get; set; }
         public List<RawgPlatformWrapper> platforms { get; set; }
     }
 
@@ -31,6 +32,11 @@ namespace WpfApp1
     }
 
     public class RawgGenre
+    {
+        public string name { get; set; }
+    }
+
+    public class RawgTags
     {
         public string name { get; set; }
     }

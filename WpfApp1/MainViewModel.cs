@@ -141,7 +141,7 @@ namespace WpfApp1
                     new Game { Name = "Tetris" }
                 };*/
                 User = new User("New User");
-                User.Description = "There are no description yet... However it can change when you want. Test Test Test Test Test Test Test Test Test Test Test Test Test Test";
+                User.Description = "There are no description yet... However it can change when you want.";
                 //Testcontent(AllGames);
             }
             foreach (var game in User.Games)
