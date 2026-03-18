@@ -129,7 +129,7 @@ namespace WpfApp1
             int playing = Games.Count(g => g.State == GameState.Playing);
             int stopped = Games.Count(g => g.State == GameState.Stop);
 
-            return $"You have played {Games.Count} games.\n" +
+            return $"You have played {Games.Count - planned} games.\n" +
                    $"Currently playing: {playing}\n" +
                    $"Finished: {finished}\n" +
                    $"Planned: {planned}\n" +

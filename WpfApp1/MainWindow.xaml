@@ -117,26 +117,26 @@
 
                         <!-- Title -->
                         <TextBlock Text="Statistics"
-                           FontSize="22"
+                           FontSize="25"
                            FontWeight="Bold"
                            Margin="0,0,0,20"
                            Foreground="White"/>
 
                         <!-- Time played -->
                         <TextBlock Text="{Binding User.Time}"
-                           FontSize="16"
+                           FontSize="19"
                            Margin="0,0,0,20"
                            Foreground="White"/>
 
                         <!-- Games States numbers -->
                         <TextBlock Text="{Binding User.Statistics}"
-                           FontSize="16"
+                           FontSize="19"
                            Margin="0,0,0,20"
                            Foreground="White"/>
 
                             <!-- Most played -->
-                        <TextBlock Text="Most played game"
-                           FontSize="16"
+                        <TextBlock Text="Most played game:"
+                           FontSize="25"
                            FontWeight="SemiBold"
                            Margin="0,10"
                            Foreground="White"/>
@@ -208,80 +208,141 @@
                    HorizontalAlignment="Center"
                    VerticalAlignment="Center"/>
                 </Grid>
-                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <ScrollViewer VerticalScrollBarVisibility="Auto"
+              Background="#0F172A">
+                    <!-- Bleu foncé -->
 
                     <ItemsControl ItemsSource="{Binding GamesGroupedView}">
 
-                        <!-- Chaque groupe -->
+                        <!-- GROUP STYLE -->
                         <ItemsControl.GroupStyle>
                             <GroupStyle>
 
-                                <!-- Header du groupe -->
+                                <!-- Header -->
                                 <GroupStyle.HeaderTemplate>
                                     <DataTemplate>
                                         <TextBlock Text="{Binding Name}"
-                                           FontSize="22"
-                                           Foreground="White"
-                                           Margin="20,20,0,10"
-                                           FontWeight="Bold"/>
+                                   FontSize="24"
+                                   Foreground="#E0E7FF"
+                                   Margin="20,25,0,10"
+                                   FontWeight="SemiBold"/>
                                     </DataTemplate>
                                 </GroupStyle.HeaderTemplate>
 
-                                <!-- Les jeux du groupe -->
+                                <!-- PANEL DU GROUPE = SCROLL HORIZONTAL -->
                                 <GroupStyle.Panel>
                                     <ItemsPanelTemplate>
                                         <StackPanel Orientation="Vertical"/>
                                     </ItemsPanelTemplate>
                                 </GroupStyle.Panel>
 
+                                <!-- CONTENU DU GROUPE -->
+                                <GroupStyle.ContainerStyle>
+                                    <Style TargetType="GroupItem">
+                                        <Setter Property="Template">
+                                            <Setter.Value>
+                                                <ControlTemplate TargetType="GroupItem">
+                                                    <StackPanel>
+
+                                                        <!-- Header -->
+                                                        <ContentPresenter Content="{TemplateBinding Content}"
+                                                          ContentTemplate="{TemplateBinding ContentTemplate}"/>
+
+                                                        <!-- Scroll horizontal -->
+                                                        <ScrollViewer HorizontalScrollBarVisibility="Auto"
+                                                      VerticalScrollBarVisibility="Disabled">
+                                                            <ItemsPresenter/>
+                                                        </ScrollViewer>
+
+                                                    </StackPanel>
+                                                </ControlTemplate>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </Style>
+                                </GroupStyle.ContainerStyle>
+
                             </GroupStyle>
                         </ItemsControl.GroupStyle>
 
-                        <!-- Template d’un jeu -->
+                        <!-- ITEMS PANEL (horizontal pour chaque groupe) -->
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Orientation="Horizontal"/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+
+                        <!-- ITEM TEMPLATE -->
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
-                                <Button Width="120"
-                                Height="150"
-                                Margin="10"
-                                Background="Transparent"
-                                BorderThickness="0"
-                                Command="{Binding DataContext.OpenGameCommand,
-                                          RelativeSource={RelativeSource AncestorType=Window}}"
-                                CommandParameter="{Binding}">
 
-                                    <StackPanel>
-                                        <Grid Width="100"
-                                      Height="100"
-                                      ClipToBounds="True">
-                                            <Border Width="100"
-                                                Height="100"
-                                                CornerRadius="6"
-                                                ClipToBounds="True"
-                                                Margin="0,0,10,0">
-                                                <Image Source="{Binding Illustration}"
-                                                    Stretch="UniformToFill"
-                                                    HorizontalAlignment="Center"
-                                                    VerticalAlignment="Center"/>
-                                            </Border>
-                                        </Grid>
+                                <Button Width="150"
+                        Height="200"
+                        Margin="10"
+                        Background="Transparent"
+                        BorderThickness="0"
+                        Command="{Binding DataContext.OpenGameCommand,
+                                  RelativeSource={RelativeSource AncestorType=Window}}"
+                        CommandParameter="{Binding}">
 
-                                        <TextBlock Text="{Binding Name}"
-                                           FontSize="12"
+                                    <Grid>
+
+                                        <!-- CARD -->
+                                        <Border CornerRadius="12"
+                                Background="#1E293B"
+                                Padding="8">
+
+                                            <StackPanel>
+
+                                                <!-- IMAGE -->
+                                                <Border CornerRadius="10"
+                                                    ClipToBounds="True"
+                                                    Height="120"
+                                                    Background="#0F172A">
+
+                                                    <Image Source="{Binding Illustration}"
+                                                       Stretch="Uniform"
+                                                       HorizontalAlignment="Center"
+                                                       VerticalAlignment="Center"/>
+                                                </Border>
+
+                                                <!-- TITLE -->
+                                                <TextBlock Text="{Binding Name}"
+                                           FontSize="13"
                                            TextAlignment="Center"
-                                           Margin="0,5,0,0"
-                                           Foreground="White"/>
-                                    </StackPanel>
+                                           Margin="0,8,0,0"
+                                           Foreground="#E2E8F0"
+                                           TextWrapping="Wrap"/>
+                                            </StackPanel>
+                                        </Border>
+
+                                    </Grid>
+
+                                    <!-- HOVER EFFECT -->
+                                    <Button.Style>
+                                        <Style TargetType="Button">
+                                            <Setter Property="RenderTransform">
+                                                <Setter.Value>
+                                                    <ScaleTransform ScaleX="1" ScaleY="1"/>
+                                                </Setter.Value>
+                                            </Setter>
+
+                                            <Setter Property="RenderTransformOrigin" Value="0.5,0.5"/>
+
+                                            <Style.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter Property="RenderTransform">
+                                                        <Setter.Value>
+                                                            <ScaleTransform ScaleX="1.08" ScaleY="1.08"/>
+                                                        </Setter.Value>
+                                                    </Setter>
+                                                </Trigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Button.Style>
 
                                 </Button>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
-
-                        <!-- IMPORTANT : Jeux horizontaux -->
-                        <ItemsControl.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <WrapPanel/>
-                            </ItemsPanelTemplate>
-                        </ItemsControl.ItemsPanel>
 
                     </ItemsControl>
 
