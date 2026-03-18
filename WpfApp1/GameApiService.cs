@@ -31,7 +31,7 @@ namespace WpfApp1
                 {
                     Name = g.name,
                     OnlineImageUrl = g.background_image,
-                    release = new List<string> { g.released },
+                    release = new List<string> { g.released ?? "Unknown" },
                     genre = g.genres?.Select(x => x.name).ToList() ?? new List<string>(),
                     device = g.platforms?
                         .Select(p => p.platform.name)

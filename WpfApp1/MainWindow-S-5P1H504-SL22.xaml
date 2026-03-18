@@ -4,6 +4,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
         xmlns:local="clr-namespace:WpfApp1"
         mc:Ignorable="d"
         Style="{StaticResource MaterialDesignWindow}"
@@ -128,13 +129,7 @@
                            Margin="0,0,0,20"
                            Foreground="White"/>
 
-                        <!-- Games States numbers -->
-                        <TextBlock Text="{Binding User.Statistics}"
-                           FontSize="16"
-                           Margin="0,0,0,20"
-                           Foreground="White"/>
-
-                            <!-- Most played -->
+                        <!-- Most played -->
                         <TextBlock Text="Most played game"
                            FontSize="16"
                            FontWeight="SemiBold"

@@ -169,6 +169,8 @@ namespace WpfApp1
                     if (!AllGames.Contains(g))
                     { 
                         AllGames.Add(g);
+                        if (g.release == null || g.release[0] == "")
+                            g.release = new List<string> {"Unknown" };
                     }
                     var window = new GameDetailsWindowList(g, User.Games, User, AllGames);
                     window.Show();
@@ -195,8 +197,10 @@ namespace WpfApp1
                         newGame.device = new List<string>();
                     if (newGame.tags == null)
                         newGame.tags = new List<string>();
-                    if (newGame.release == null)
-                        newGame.release = new List<string>();
+                    if (newGame.release == null || newGame.release[0] == "")
+                    {
+                        newGame.release = new List<string>() {"Unknown"};
+                    }
 
                     if (newGame.Illustration == null)
                         newGame.Illustration = new BitmapImage(
@@ -239,7 +243,7 @@ namespace WpfApp1
                 tags = g.tags ?? new List<string>(),
                 genre = g.genre ?? new List<string>(),
                 device = g.device ?? new List<string>(),
-                release = g.release ?? new List<string>(),
+                release = g.release ?? new List<string>() { "Unknown"},
                 Illustration = LoadImage(g.ImagePath),
                 Time = g.Time,
                 Score = g.Score,

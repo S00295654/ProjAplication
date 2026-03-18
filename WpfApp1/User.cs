@@ -42,6 +42,14 @@ namespace WpfApp1
                 return TimeInDay();
             }
         }
+
+        public string Statistics
+        {
+            get
+            {
+                return StatisticsCal();
+            }
+        }
         public Game MostPlayed
         {
             get
@@ -89,9 +97,11 @@ namespace WpfApp1
                 t = t - 24;
             }
             hour = (int)t;
+            if (hour == 0)
+                return "Look's like you didn't played at";
             if (day>1)
             {
-                return $"You have {day} days of gaming and {hour} of gaming";
+                return $"You have {day} days of gaming and {hour}h of gaming";
             }
             if (day==1)
                 return $"You have {day} days and {hour}h of gaming";
@@ -109,6 +119,22 @@ namespace WpfApp1
                     res = game;
             }
             return res;
+        }
+
+        public string StatisticsCal()
+        {
+            int finished = Games.Count(g => g.State == GameState.Finished);
+            int planned = Games.Count(g => g.State == GameState.Planned);
+            int dropped = Games.Count(g => g.State == GameState.Dropped);
+            int playing = Games.Count(g => g.State == GameState.Playing);
+            int stopped = Games.Count(g => g.State == GameState.Stop);
+
+            return $"You have played {Games.Count} games.\n" +
+                   $"Currently playing: {playing}\n" +
+                   $"Finished: {finished}\n" +
+                   $"Planned: {planned}\n" +
+                   $"Dropped: {dropped}\n" +
+                   $"Stopped: {stopped}";
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
