@@ -13,7 +13,7 @@
         FontFamily="{DynamicResource MaterialDesignFont}"
         Icon="Images/logo.png"
         Title="GameList" Height="700" Width="800">
-    <!-- ⚡ Ajoute ceci -->
+    
     <Window.Resources>
         <BooleanToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
     </Window.Resources>
@@ -209,8 +209,8 @@
                    VerticalAlignment="Center"/>
                 </Grid>
                 <ScrollViewer VerticalScrollBarVisibility="Auto"
-              Background="#0F172A">
-                    <!-- Bleu foncé -->
+              Background="#1F2A44">
+                    <!-- Bleu foncé #0F172A" -->
 
                     <ItemsControl ItemsSource="{Binding GamesGroupedView}">
 
@@ -288,7 +288,7 @@
 
                                         <!-- CARD -->
                                         <Border CornerRadius="12"
-                                Background="#1E293B"
+                                Background="Black"
                                 Padding="8">
 
                                             <StackPanel>
@@ -297,7 +297,7 @@
                                                 <Border CornerRadius="10"
                                                     ClipToBounds="True"
                                                     Height="120"
-                                                    Background="#0F172A">
+                                                    Background="Black">
 
                                                     <Image Source="{Binding Illustration}"
                                                        Stretch="Uniform"
