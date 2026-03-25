@@ -324,7 +324,7 @@ namespace WpfApp1
 
             foreach (var g in AllGames)
             {
-                if (IsMatch(g.Name, SearchText))
+                if (IsMatch(g, SearchText))
                 {
                     FilteredGames.Add(g);
                 }
@@ -358,21 +358,45 @@ namespace WpfApp1
         void OnPropertyChanged([CallerMemberName] string n = null)
             => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(n));
 
-        private bool IsMatch(string source, string search)
+        private bool IsMatch(Game game, string search)
         {
-            if (string.IsNullOrWhiteSpace(source) || string.IsNullOrWhiteSpace(search))
-                return false;
-
-            source = source.ToLower();
-            search = search.ToLower();
-
-            // correspondance normale
-            if (source.Contains(search))
+            if (string.IsNullOrWhiteSpace(search))
                 return true;
 
-            // correspondance par mots
-            var words = source.Split(' ');
-            return words.Any(w => w.StartsWith(search));
+            var terms = search.ToLower()
+                .Split(' ', (char)StringSplitOptions.RemoveEmptyEntries);
+
+            foreach (var term in terms)
+            {
+                bool match = false;
+
+                // 🎮 Nom
+                if (!string.IsNullOrEmpty(game.Name) &&
+                    game.Name.ToLower().Contains(term))
+                {
+                    match = true;
+                }
+
+                // Plateformes
+                if (game.device != null &&
+                    game.device.Any(d => d.ToLower().Contains(term)))
+                {
+                    match = true;
+                }
+
+                // Date (année)
+                if (game.release != null &&
+                    game.release.Any(r => r != null && r.Contains(term)))
+                {
+                    match = true;
+                }
+
+                // Si un mot ne correspond à rien : on exclut
+                if (!match)
+                    return false;
+            }
+
+            return true;
         }
 
     }
